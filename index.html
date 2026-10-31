@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>غرس | متجر النباتات في الرياض</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== Navbar (مشترك: انسخيه نفسه في كل الصفحات) ===== -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">غرس</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">الرئيسية</a></li>
+          <li><a href="pages/products.html">المنتجات</a></li>
+          <li><a href="pages/plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="pages/care-kit.html">باقة العناية</a></li>
+          <li><a href="pages/offers.html">العروض</a></li>
+          <li><a href="pages/cart.html">السلة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero + الأسئلة الثلاثة ===== -->
+    <section class="hero">
+      <div class="container">
+        <div>
+          <h1>اختاري النبتة اللي تعيش في بيتك</h1>
+          <p>جاوبي على ثلاثة أسئلة، ونعرض لك النباتات المناسبة لمكانك وإضاءته. توصيل داخل الرياض.</p>
+        </div>
+
+        <form class="finder" action="pages/plant-finder.html" method="get">
+          <h2>وين بتحطين النبتة؟</h2>
+          <label>المكان
+            <select name="place" required>
+              <option value="">اختاري</option>
+              <option value="inside">داخل البيت</option>
+              <option value="outside">خارج البيت</option>
+            </select>
+          </label>
+          <label>كمية الإضاءة
+            <select name="light" required>
+              <option value="">اختاري</option>
+              <option value="low">قليلة</option>
+              <option value="medium">متوسطة</option>
+              <option value="high">عالية (شمس مباشرة)</option>
+            </select>
+          </label>
+          <label>حجم المساحة
+            <select name="size" required>
+              <option value="">اختاري</option>
+              <option value="small">صغيرة (مكتب أو رف)</option>
+              <option value="medium">متوسطة (ركن في الغرفة)</option>
+              <option value="large">كبيرة (صالة أو حديقة)</option>
+            </select>
+          </label>
+          <button type="submit" class="btn btn-light">اعرضي النباتات المناسبة</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== التصنيفات ===== -->
+    <section class="section">
+      <div class="container">
+        <h2>تسوقي حسب القسم</h2>
+        <div class="categories">
+          <a class="category" href="pages/products.html?cat=indoor">نباتات داخلية</a>
+          <a class="category" href="pages/products.html?cat=outdoor">نباتات خارجية</a>
+          <a class="category" href="pages/products.html?cat=pots">أصص</a>
+          <a class="category" href="pages/products.html?cat=tools">أدوات العناية</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Plant Care Kit ===== -->
+    <section class="container">
+      <div class="kit-banner">
+        <div>
+          <h2>باقة العناية بالنبتة</h2>
+          <p>تراب وسماد وبخاخ مع تعليمات عناية بسيطة، مختارة حسب نبتتك.</p>
+        </div>
+        <a href="pages/care-kit.html" class="btn btn-light">شوفي الباقة</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer (مشترك) ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="pages/products.html">المنتجات</a></li>
+        <li><a href="pages/plant-finder.html">اختاري نبتتك</a></li>
+        <li><a href="pages/feedback.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

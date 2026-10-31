@@ -1,0 +1,103 @@
+/* ===== غرس – الستايل المشترك (لا يعدّل عليه إلا بالاتفاق مع البنات) ===== */
+:root {
+  --green: #2E6B3A;
+  --green-dark: #1F4A28;
+  --green-light: #8DB596;
+  --green-pale: #E6EFE6;
+  --offwhite: #FAF7F0;
+  --text: #2B2B2B;
+  --muted: #5F6B61;
+  --accent: #B8863B; /* للخصومات والعروض */
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--offwhite);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.container { width: min(1100px, 92%); margin-inline: auto; }
+
+/* ----- Navbar ----- */
+.navbar { background: var(--green); color: #fff; }
+.navbar .container {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px 24px; padding-block: 12px;
+}
+.logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 0; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 4px 22px; list-style: none; }
+.nav-links a { padding: 4px 2px; border-bottom: 2px solid transparent; }
+.nav-links a:hover, .nav-links a.active { border-bottom-color: var(--green-light); }
+
+/* ----- Buttons ----- */
+.btn {
+  display: inline-block; background: var(--green); color: #fff;
+  padding: 10px 26px; border: 0; border-radius: var(--radius);
+  font: inherit; font-weight: 700; cursor: pointer;
+}
+.btn:hover { background: var(--green-dark); }
+.btn-light { background: var(--offwhite); color: var(--green-dark); }
+.btn-light:hover { background: #fff; }
+
+/* ----- Hero + plant finder ----- */
+.hero { background: var(--green-pale); padding-block: 56px; }
+.hero .container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+}
+.hero h1 { font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.4; color: var(--green-dark); }
+.hero p { color: var(--muted); margin-top: 12px; max-width: 34ch; }
+
+.finder {
+  background: var(--green); color: #fff; padding: 28px; border-radius: 14px;
+  display: grid; gap: 14px;
+}
+.finder h2 { font-size: 1.25rem; }
+.finder label { display: grid; gap: 4px; font-weight: 500; }
+.finder select {
+  font: inherit; padding: 10px; border-radius: 8px; border: 0;
+  background: var(--offwhite); color: var(--text);
+}
+
+/* ----- Sections ----- */
+.section { padding-block: 52px; }
+.section h2 { font-size: 1.6rem; color: var(--green-dark); margin-bottom: 20px; }
+
+.categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.category {
+  border: 1.5px solid var(--green-light); border-radius: var(--radius);
+  padding: 28px 18px; text-align: center; font-weight: 700; color: var(--green-dark);
+  background: #fff;
+}
+.category:hover { background: var(--green-pale); }
+.category small { display: block; font-weight: 400; color: var(--muted); }
+
+.kit-banner {
+  background: var(--green-dark); color: #fff; border-radius: 14px;
+  padding: 32px; display: flex; flex-wrap: wrap; gap: 16px;
+  align-items: center; justify-content: space-between;
+}
+.kit-banner h2 { color: #fff; margin: 0 0 4px; }
+.kit-banner p { color: #d9e6da; }
+
+/* ----- Footer ----- */
+.footer { background: var(--green-dark); color: #d9e6da; padding-block: 28px; margin-top: 40px; }
+.footer .container {
+  display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between;
+}
+.footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.footer a:hover { color: #fff; }
+
+/* ----- Mobile ----- */
+@media (max-width: 760px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .categories { grid-template-columns: repeat(2, 1fr); }
+}
