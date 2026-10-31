@@ -1,105 +1,175 @@
-.cart { padding-block: 36px 48px; }
-.cart h1 { font-size: 2rem; color: var(--green-dark); margin-bottom: 20px; }
-.cart h2 { font-size: 1.3rem; color: var(--green-dark); margin-bottom: 10px; }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>السلة | غرس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
 
-.cart-grid {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 24px;
-  align-items: start;
-}
-.cart-grid[hidden], .empty[hidden] { display: none; }
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">غرس</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html" class="active">السلة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-.box {
-  background: #fff;
-  border: 1.5px solid var(--green-pale);
-  border-radius: var(--radius);
-  padding: 22px;
-}
+  <main class="container cart">
+    <h1>سلة التسوق</h1>
 
-.empty { text-align: center; padding-block: 48px; }
-.empty p { color: var(--muted); margin-bottom: 16px; }
+    <div id="cart-empty" class="box empty" hidden>
+      <h2>سلتك فاضية</h2>
+      <p>ابدئي باختيار نباتات تعجبك.</p>
+      <a href="products.html" class="btn">تصفحي المنتجات</a>
+    </div>
 
-.cart-items { list-style: none; }
-.cart-items li {
-  display: grid;
-  grid-template-columns: auto 1fr auto auto auto;
-  gap: 14px;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--green-pale);
-}
-.cart-items li:first-child { padding-top: 0; }
-.cart-items li:last-child { border-bottom: 0; padding-bottom: 0; }
+    <div id="cart-content" class="cart-grid">
+      <section class="box">
+        <ul id="cart-items" class="cart-items"></ul>
+      </section>
 
-.thumb {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius);
-  background: var(--green-pale);
-  display: grid;
-  place-items: center;
-  font-size: 1.8rem;
-}
+      <aside class="box summary">
+        <h2>ملخص السلة</h2>
+        <dl class="totals">
+          <div><dt>المجموع</dt><dd id="subtotal"></dd></div>
+          <div><dt>التوصيل</dt><dd id="delivery"></dd></div>
+          <div class="grand"><dt>الإجمالي</dt><dd id="total"></dd></div>
+        </dl>
+        <p class="note">يمكنك إضافة كود الخصم في صفحة الدفع.</p>
+        <a href="checkout.html" class="btn btn-block">إتمام الطلب</a>
+        <a href="products.html" class="back-link">متابعة التسوق</a>
+      </aside>
+    </div>
+  </main>
 
-.info { display: grid; }
-.info strong { color: var(--green-dark); }
-.info span { color: var(--muted); font-size: .92rem; }
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a href="feedback.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+  </footer>
 
-.qty {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1.5px solid var(--green-light);
-  border-radius: 999px;
-  padding: 2px 6px;
-}
-.qty button {
-  width: 30px;
-  height: 30px;
-  border: 0;
-  border-radius: 50%;
-  background: var(--green-pale);
-  color: var(--green-dark);
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-}
-.qty button:hover { background: var(--green-light); }
-.qty span { min-width: 20px; text-align: center; font-weight: 700; }
+  <script>
+    var KEY = "ghars_cart";
+    var DELIVERY = 20;
 
-.line { color: var(--green-dark); min-width: 70px; text-align: start; }
+    var DEMO = [
+      { id: "p1", name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
+      { id: "p2", name: "أصيص سيراميك", price: 30, qty: 1 },
+      { id: "p3", name: "باقة العناية", price: 35, qty: 1 }
+    ];
 
-.remove {
-  border: 0;
-  background: none;
-  color: #b3261e;
-  font: inherit;
-  cursor: pointer;
-  text-decoration: underline;
-}
+    function load() {
+      try {
+        var raw = localStorage.getItem(KEY);
+        if (raw === null) { save(DEMO); return DEMO.slice(); }
+        return JSON.parse(raw) || [];
+      } catch (e) { return DEMO.slice(); }
+    }
 
-.summary { position: sticky; top: 16px; }
-.totals { margin: 8px 0 14px; }
-.totals div { display: flex; justify-content: space-between; padding: 4px 0; }
-.totals .grand {
-  border-top: 2px solid var(--green-pale);
-  margin-top: 6px;
-  padding-top: 10px;
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: var(--green-dark);
-}
-.note { color: var(--muted); font-size: .9rem; margin-bottom: 14px; }
-.btn-block { display: block; width: 100%; }
-.back-link { display: block; text-align: center; margin-top: 12px; color: var(--green); font-weight: 500; }
-.back-link:hover { color: var(--green-dark); }
+    function save(items) {
+      try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+    }
 
-@media (max-width: 820px) {
-  .cart-grid { grid-template-columns: 1fr; }
-  .summary { position: static; }
-}
-@media (max-width: 560px) {
-  .cart-items li { grid-template-columns: auto 1fr; }
-  .cart-items .qty, .cart-items .line, .cart-items .remove { grid-column: 2; justify-self: start; }
-}
+    function fmt(n) { return n + " ر.س"; }
+
+    var cart = load();
+    var list = document.getElementById("cart-items");
+
+    function makeBtn(text, label, onClick) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = text;
+      b.setAttribute("aria-label", label);
+      b.addEventListener("click", onClick);
+      return b;
+    }
+
+    function render() {
+      list.innerHTML = "";
+      var empty = cart.length === 0;
+      document.getElementById("cart-empty").hidden = !empty;
+      document.getElementById("cart-content").hidden = empty;
+
+      var subtotal = 0;
+      cart.forEach(function (item, i) {
+        subtotal += item.price * item.qty;
+
+        var li = document.createElement("li");
+
+        var thumb = document.createElement("span");
+        thumb.className = "thumb";
+        thumb.textContent = "🌿";
+
+        var info = document.createElement("div");
+        info.className = "info";
+        var name = document.createElement("strong");
+        name.textContent = item.name;
+        var unit = document.createElement("span");
+        unit.textContent = fmt(item.price) + " للقطعة";
+        info.appendChild(name);
+        info.appendChild(unit);
+
+        var qty = document.createElement("div");
+        qty.className = "qty";
+        var count = document.createElement("span");
+        count.textContent = item.qty;
+        qty.appendChild(makeBtn("+", "زيادة الكمية", function () {
+          if (cart[i].qty < 10) { cart[i].qty++; save(cart); render(); }
+        }));
+        qty.appendChild(count);
+        qty.appendChild(makeBtn("−", "إنقاص الكمية", function () {
+          if (cart[i].qty > 1) { cart[i].qty--; save(cart); render(); }
+        }));
+
+        var line = document.createElement("strong");
+        line.className = "line";
+        line.textContent = fmt(item.price * item.qty);
+
+        var remove = makeBtn("حذف", "حذف المنتج", function () {
+          cart.splice(i, 1);
+          save(cart);
+          render();
+        });
+        remove.className = "remove";
+
+        li.appendChild(thumb);
+        li.appendChild(info);
+        li.appendChild(qty);
+        li.appendChild(line);
+        li.appendChild(remove);
+        list.appendChild(li);
+      });
+
+      var delivery = empty ? 0 : DELIVERY;
+      document.getElementById("subtotal").textContent = fmt(subtotal);
+      document.getElementById("delivery").textContent = fmt(delivery);
+      document.getElementById("total").textContent = fmt(subtotal + delivery);
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
