@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>السلة | غرس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">غرس</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html" class="active">السلة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container cart">
+    <h1>سلة التسوق</h1>
+
+    <div id="cart-empty" class="box empty" hidden>
+      <h2>سلتك فاضية</h2>
+      <p>ابدئي باختيار نباتات تعجبك.</p>
+      <a href="products.html" class="btn">تصفحي المنتجات</a>
+    </div>
+
+    <div id="cart-content" class="cart-grid">
+      <section class="box">
+        <ul id="cart-items" class="cart-items"></ul>
+      </section>
+
+      <aside class="box summary">
+        <h2>ملخص السلة</h2>
+        <dl class="totals">
+          <div><dt>المجموع</dt><dd id="subtotal"></dd></div>
+          <div><dt>التوصيل</dt><dd id="delivery"></dd></div>
+          <div class="grand"><dt>الإجمالي</dt><dd id="total"></dd></div>
+        </dl>
+        <p class="note">يمكنك إضافة كود الخصم في صفحة الدفع.</p>
+        <a href="checkout.html" class="btn btn-block">إتمام الطلب</a>
+        <a href="products.html" class="back-link">متابعة التسوق</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a href="feedback.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    var KEY = "ghars_cart";
+    var DELIVERY = 20;
+
+    var DEMO = [
+      { id: "p1", name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
+      { id: "p2", name: "أصيص سيراميك", price: 30, qty: 1 },
+      { id: "p3", name: "باقة العناية", price: 35, qty: 1 }
+    ];
+
+    function load() {
+      try {
+        var raw = localStorage.getItem(KEY);
+        if (raw === null) { save(DEMO); return DEMO.slice(); }
+        return JSON.parse(raw) || [];
+      } catch (e) { return DEMO.slice(); }
+    }
+
+    function save(items) {
+      try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+    }
+
+    function fmt(n) { return n + " ر.س"; }
+
+    var cart = load();
+    var list = document.getElementById("cart-items");
+
+    function makeBtn(text, label, onClick) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = text;
+      b.setAttribute("aria-label", label);
+      b.addEventListener("click", onClick);
+      return b;
+    }
+
+    function render() {
+      list.innerHTML = "";
+      var empty = cart.length === 0;
+      document.getElementById("cart-empty").hidden = !empty;
+      document.getElementById("cart-content").hidden = empty;
+
+      var subtotal = 0;
+      cart.forEach(function (item, i) {
+        subtotal += item.price * item.qty;
+
+        var li = document.createElement("li");
+
+        var thumb = document.createElement("span");
+        thumb.className = "thumb";
+        thumb.textContent = "🌿";
+
+        var info = document.createElement("div");
+        info.className = "info";
+        var name = document.createElement("strong");
+        name.textContent = item.name;
+        var unit = document.createElement("span");
+        unit.textContent = fmt(item.price) + " للقطعة";
+        info.appendChild(name);
+        info.appendChild(unit);
+
+        var qty = document.createElement("div");
+        qty.className = "qty";
+        var count = document.createElement("span");
+        count.textContent = item.qty;
+        qty.appendChild(makeBtn("+", "زيادة الكمية", function () {
+          if (cart[i].qty < 10) { cart[i].qty++; save(cart); render(); }
+        }));
+        qty.appendChild(count);
+        qty.appendChild(makeBtn("−", "إنقاص الكمية", function () {
+          if (cart[i].qty > 1) { cart[i].qty--; save(cart); render(); }
+        }));
+
+        var line = document.createElement("strong");
+        line.className = "line";
+        line.textContent = fmt(item.price * item.qty);
+
+        var remove = makeBtn("حذف", "حذف المنتج", function () {
+          cart.splice(i, 1);
+          save(cart);
+          render();
+        });
+        remove.className = "remove";
+
+        li.appendChild(thumb);
+        li.appendChild(info);
+        li.appendChild(qty);
+        li.appendChild(line);
+        li.appendChild(remove);
+        list.appendChild(li);
+      });
+
+      var delivery = empty ? 0 : DELIVERY;
+      document.getElementById("subtotal").textContent = fmt(subtotal);
+      document.getElementById("delivery").textContent = fmt(delivery);
+      document.getElementById("total").textContent = fmt(subtotal + delivery);
+    }
+
+    render();
+  </script>
+
+</body>
+</html>

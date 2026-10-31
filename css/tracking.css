@@ -1,0 +1,91 @@
+.tracking { padding-block: 36px 48px; display: grid; gap: 20px; }
+.tracking h1 { font-size: 2rem; color: var(--green-dark); }
+.tracking h2 { font-size: 1.3rem; color: var(--green-dark); margin-bottom: 10px; }
+
+.box {
+  background: #fff;
+  border: 1.5px solid var(--green-pale);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.track-form { display: flex; gap: 10px; }
+.track-form input {
+  flex: 1;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1.5px solid var(--green-light);
+  border-radius: 8px;
+  background: var(--offwhite);
+  color: var(--text);
+  direction: ltr;
+  text-align: right;
+}
+
+.error { margin-top: 10px; color: #b3261e; font-weight: 700; }
+.error[hidden] { display: none; }
+#result[hidden] { display: none; }
+
+.result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-bottom: 24px;
+}
+.status-text { color: var(--muted); }
+.eta {
+  background: var(--green-pale);
+  border-radius: var(--radius);
+  padding: 10px 18px;
+  display: grid;
+  text-align: center;
+}
+.eta span { font-size: .9rem; color: var(--muted); }
+.eta strong { color: var(--green-dark); }
+
+.steps { list-style: none; display: grid; gap: 0; margin-bottom: 24px; }
+.steps li {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 26px;
+  color: var(--muted);
+}
+.steps li:last-child { padding-bottom: 0; }
+.steps li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 17px;
+  top: 38px;
+  bottom: 0;
+  width: 2px;
+  background: var(--green-pale);
+}
+.steps li:last-child::before { display: none; }
+.steps li.done::before { background: var(--green); }
+
+.dot {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--green-pale);
+  color: var(--muted);
+}
+.steps li div { display: grid; padding-top: 2px; }
+.steps small { font-size: .9rem; }
+
+.steps li.done { color: var(--text); }
+.steps li.done .dot { background: var(--green); color: #fff; }
+.steps li.current { color: var(--green-dark); }
+.steps li.current .dot { background: var(--accent); color: #fff; box-shadow: 0 0 0 5px rgba(184, 134, 59, .2); }
+.steps li.current strong { font-size: 1.1rem; }
+
+@media (max-width: 560px) {
+  .track-form { flex-direction: column; }
+}

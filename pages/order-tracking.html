@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تتبع الطلب | غرس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tracking.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">غرس</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html">السلة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container tracking">
+    <h1>تتبع الطلب</h1>
+
+    <section class="box">
+      <h2>ابحثي عن طلبك</h2>
+      <form id="track-form" class="track-form" novalidate>
+        <input type="text" id="order-input" placeholder="رقم الطلب، مثال: GH123456" maxlength="8" autocomplete="off">
+        <button type="submit" class="btn">تتبع</button>
+      </form>
+      <p id="track-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="result" class="box" hidden>
+      <div class="result-head">
+        <div>
+          <h2>طلب رقم <span id="order-id" dir="ltr"></span></h2>
+          <p id="status-text" class="status-text"></p>
+        </div>
+        <div class="eta">
+          <span>الوصول المتوقع</span>
+          <strong id="eta"></strong>
+        </div>
+      </div>
+
+      <ol class="steps" id="steps">
+        <li data-step="1"><span class="dot">1</span><div><strong>تم استلام الطلب</strong><small>وصلنا طلبك وبدأنا بمراجعته</small></div></li>
+        <li data-step="2"><span class="dot">2</span><div><strong>جاري التجهيز</strong><small>نجهّز نباتاتك ونغلفها بعناية</small></div></li>
+        <li data-step="3"><span class="dot">3</span><div><strong>في الطريق إليك</strong><small>المندوب في طريقه لعنوانك في الرياض</small></div></li>
+        <li data-step="4"><span class="dot">4</span><div><strong>تم التوصيل</strong><small>استمتعي بنبتتك الجديدة</small></div></li>
+      </ol>
+
+      <a href="products.html" class="btn btn-light">متابعة التسوق</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a href="feedback.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    var STATUS = [
+      "",
+      "تم استلام طلبك، وبنبدأ بتجهيزه قريباً.",
+      "طلبك قيد التجهيز الآن.",
+      "طلبك في الطريق إليك.",
+      "تم توصيل طلبك. نتمنى لك نبتة سعيدة!"
+    ];
+
+    var form = document.getElementById("track-form");
+    var input = document.getElementById("order-input");
+    var errorBox = document.getElementById("track-error");
+    var result = document.getElementById("result");
+
+    function stageFor(id) {
+      var last = parseInt(id.charAt(id.length - 1), 10);
+      return (last % 4) + 1;
+    }
+
+    function etaText(stage) {
+      if (stage === 4) return "تم التوصيل";
+      var d = new Date();
+      d.setDate(d.getDate() + (stage === 3 ? 0 : 2));
+      return stage === 3 ? "اليوم" : d.toLocaleDateString("ar-SA", { weekday: "long", day: "numeric", month: "long" });
+    }
+
+    function show(id, stage) {
+      document.getElementById("order-id").textContent = id;
+      document.getElementById("status-text").textContent = STATUS[stage];
+      document.getElementById("eta").textContent = etaText(stage);
+
+      document.querySelectorAll("#steps li").forEach(function (li) {
+        var n = parseInt(li.getAttribute("data-step"), 10);
+        li.className = n < stage ? "done" : (n === stage ? "current" : "");
+      });
+
+      errorBox.hidden = true;
+      result.hidden = false;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var id = input.value.trim().toUpperCase();
+      if (!/^GH\d{6}$/.test(id)) {
+        result.hidden = true;
+        errorBox.textContent = "رقم الطلب غير صحيح. يبدأ بـ GH ويتبعه 6 أرقام.";
+        errorBox.hidden = false;
+        return;
+      }
+      show(id, stageFor(id));
+    });
+
+    var fromCheckout = new URLSearchParams(window.location.search).get("order");
+    if (fromCheckout && /^GH\d{6}$/.test(fromCheckout.toUpperCase())) {
+      input.value = fromCheckout.toUpperCase();
+      show(fromCheckout.toUpperCase(), 1);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الدفع | غرس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/checkout.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">غرس</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html">السلة</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container checkout">
+    <h1>إتمام الطلب</h1>
+
+    <form id="checkout-form" class="checkout-grid" novalidate>
+
+      <div class="checkout-main">
+
+        <section class="box">
+          <h2>بيانات التوصيل</h2>
+          <p class="note">التوصيل متاح داخل الرياض فقط.</p>
+
+          <div class="fields">
+            <label>الاسم الكامل
+              <input type="text" id="name" name="name" placeholder="مثال: نوره محمد" required>
+            </label>
+            <label>رقم الجوال
+              <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx" inputmode="numeric" maxlength="10" required>
+            </label>
+            <label>الحي
+              <select id="district" name="district" required>
+                <option value="">اختاري الحي</option>
+                <option>النرجس</option>
+                <option>الياسمين</option>
+                <option>الملقا</option>
+                <option>العارض</option>
+                <option>حطين</option>
+                <option>الروضة</option>
+                <option>الملز</option>
+                <option>السليمانية</option>
+                <option>الربيع</option>
+                <option>غرناطة</option>
+                <option>القيروان</option>
+                <option>أخرى</option>
+              </select>
+            </label>
+            <label>الشارع ورقم المبنى
+              <input type="text" id="street" name="street" placeholder="اسم الشارع، رقم المبنى" required>
+            </label>
+            <label class="full">ملاحظات للتوصيل (اختياري)
+              <textarea name="notes" rows="2" placeholder="مثال: اتصلي عند الوصول"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="box">
+          <h2>طريقة الدفع</h2>
+
+          <div class="pay-options">
+            <label class="pay-option">
+              <input type="radio" name="payment" value="mada" checked>
+              <span>مدى</span>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment" value="card">
+              <span>بطاقة ائتمانية</span>
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment" value="applepay">
+              <span>Apple Pay</span>
+            </label>
+          </div>
+
+          <div id="card-fields" class="fields">
+            <label class="full">اسم حامل البطاقة
+              <input type="text" id="card-name" placeholder="الاسم كما في البطاقة">
+            </label>
+            <label class="full">رقم البطاقة
+              <input type="text" id="card-number" placeholder="0000 0000 0000 0000" inputmode="numeric" maxlength="19" autocomplete="off">
+            </label>
+            <label>تاريخ الانتهاء
+              <input type="text" id="card-expiry" placeholder="MM/YY" inputmode="numeric" maxlength="5" autocomplete="off">
+            </label>
+            <label>CVV
+              <input type="password" id="card-cvv" placeholder="***" inputmode="numeric" maxlength="3" autocomplete="off">
+            </label>
+          </div>
+
+          <p id="applepay-note" class="note" hidden>سيظهر لك طلب تأكيد Apple Pay بعد الضغط على زر تأكيد الطلب.</p>
+          <p class="demo-note"> الدفع للعرض فقط ولا تُحفظ أي بيانات بطاقة.</p>
+        </section>
+      </div>
+
+      <aside class="box summary">
+        <h2>ملخص الطلب</h2>
+
+        <ul class="summary-items" id="summary-items"></ul>
+
+        <div class="coupon">
+          <input type="text" id="coupon" placeholder="كود الخصم">
+          <button type="button" id="apply-coupon" class="btn">تطبيق</button>
+        </div>
+        <p id="coupon-msg" class="note" aria-live="polite"></p>
+
+        <dl class="totals">
+          <div><dt>المجموع</dt><dd id="subtotal">110 ر.س</dd></div>
+          <div><dt>الخصم</dt><dd id="discount">0 ر.س</dd></div>
+          <div><dt>التوصيل</dt><dd id="delivery">20 ر.س</dd></div>
+          <div class="grand"><dt>الإجمالي</dt><dd id="total">130 ر.س</dd></div>
+        </dl>
+
+        <p id="form-error" class="error" role="alert" hidden></p>
+        <button type="submit" class="btn btn-block">تأكيد الطلب</button>
+        <a href="cart.html" class="back-link">الرجوع للسلة</a>
+      </aside>
+
+    </form>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a href="feedback.html">تواصل معنا</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    var CART_KEY = "ghars_cart";
+    var cartItems = [];
+    try { cartItems = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) {}
+    if (!cartItems.length) {
+      cartItems = [
+        { name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
+        { name: "أصيص سيراميك", price: 30, qty: 1 },
+        { name: "باقة العناية", price: 35, qty: 1 }
+      ];
+    }
+    var SUBTOTAL = 0;
+    var itemsList = document.getElementById("summary-items");
+    cartItems.forEach(function (item) {
+      SUBTOTAL += item.price * item.qty;
+      var li = document.createElement("li");
+      var a = document.createElement("span");
+      a.textContent = item.name + " × " + item.qty;
+      var b = document.createElement("span");
+      b.textContent = (item.price * item.qty) + " ر.س";
+      li.appendChild(a);
+      li.appendChild(b);
+      itemsList.appendChild(li);
+    });
+    var DELIVERY = 20;
+    var discount = 0;
+
+    var COUPONS = { "GHARS10": 10 };
+
+    var form = document.getElementById("checkout-form");
+    var cardFields = document.getElementById("card-fields");
+    var applepayNote = document.getElementById("applepay-note");
+    var errorBox = document.getElementById("form-error");
+
+    function fmt(n) { return n + " ر.س"; }
+
+    function updateTotals() {
+      document.getElementById("subtotal").textContent = fmt(SUBTOTAL);
+      document.getElementById("discount").textContent = (discount ? "-" : "") + fmt(discount);
+      document.getElementById("delivery").textContent = fmt(DELIVERY);
+      document.getElementById("total").textContent = fmt(SUBTOTAL - discount + DELIVERY);
+    }
+
+    document.getElementById("apply-coupon").addEventListener("click", function () {
+      var code = document.getElementById("coupon").value.trim().toUpperCase();
+      var msg = document.getElementById("coupon-msg");
+      if (COUPONS[code]) {
+        discount = Math.round(SUBTOTAL * COUPONS[code] / 100);
+        msg.textContent = "تم تطبيق الكود: خصم " + COUPONS[code] + "%";
+        msg.className = "note ok";
+      } else {
+        discount = 0;
+        msg.textContent = "الكود غير صحيح";
+        msg.className = "note bad";
+      }
+      updateTotals();
+    });
+
+    function togglePayment() {
+      var method = form.elements["payment"].value;
+      cardFields.hidden = (method === "applepay");
+      applepayNote.hidden = (method !== "applepay");
+    }
+    form.querySelectorAll('input[name="payment"]').forEach(function (r) {
+      r.addEventListener("change", togglePayment);
+    });
+
+    document.getElementById("card-number").addEventListener("input", function (e) {
+      var v = e.target.value.replace(/\D/g, "").slice(0, 16);
+      e.target.value = v.replace(/(.{4})/g, "$1 ").trim();
+    });
+    document.getElementById("card-expiry").addEventListener("input", function (e) {
+      var v = e.target.value.replace(/\D/g, "").slice(0, 4);
+      e.target.value = v.length > 2 ? v.slice(0, 2) + "/" + v.slice(2) : v;
+    });
+    document.getElementById("card-cvv").addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+    });
+    document.getElementById("phone").addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+    });
+
+    function showError(text) {
+      errorBox.textContent = text;
+      errorBox.hidden = false;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      if (!document.getElementById("name").value.trim()) return showError("اكتبي الاسم الكامل.");
+      if (!/^05\d{8}$/.test(document.getElementById("phone").value)) return showError("رقم الجوال لازم يبدأ بـ 05 ويكون 10 أرقام.");
+      if (!document.getElementById("district").value) return showError("اختاري الحي.");
+      if (!document.getElementById("street").value.trim()) return showError("اكتبي الشارع ورقم المبنى.");
+
+      var method = form.elements["payment"].value;
+      if (method !== "applepay") {
+        if (!document.getElementById("card-name").value.trim()) return showError("اكتبي اسم حامل البطاقة.");
+        if (document.getElementById("card-number").value.replace(/\s/g, "").length !== 16) return showError("رقم البطاقة لازم يكون 16 رقم.");
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(document.getElementById("card-expiry").value)) return showError("تاريخ الانتهاء غير صحيح (MM/YY).");
+        if (document.getElementById("card-cvv").value.length !== 3) return showError("رمز CVV لازم يكون 3 أرقام.");
+      }
+
+      try { localStorage.removeItem(CART_KEY); } catch (err) {}
+      var orderId = "GH" + Math.floor(100000 + Math.random() * 900000);
+      window.location.href = "order-tracking.html?order=" + orderId;
+    });
+
+    togglePayment();
+    updateTotals();
+  </script>
+
+</body>
+</html>
