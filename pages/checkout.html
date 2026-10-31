@@ -41,7 +41,7 @@
 
           <div class="fields">
             <label>الاسم الكامل
-              <input type="text" id="name" name="name" placeholder="مثال: نور محمد" required>
+              <input type="text" id="name" name="name" placeholder="مثال: نوره محمد" required>
             </label>
             <label>رقم الجوال
               <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx" inputmode="numeric" maxlength="10" required>
@@ -113,11 +113,7 @@
       <aside class="box summary">
         <h2>ملخص الطلب</h2>
 
-        <ul class="summary-items" id="summary-items">
-          <li><span>بوتس (نبتة داخلية) × 1</span><span>45 ر.س</span></li>
-          <li><span>أصيص سيراميك × 1</span><span>30 ر.س</span></li>
-          <li><span>باقة العناية × 1</span><span>35 ر.س</span></li>
-        </ul>
+        <ul class="summary-items" id="summary-items"></ul>
 
         <div class="coupon">
           <input type="text" id="coupon" placeholder="كود الخصم">
@@ -155,7 +151,29 @@
   </footer>
 
   <script>
-    var SUBTOTAL = 110;
+    var CART_KEY = "ghars_cart";
+    var cartItems = [];
+    try { cartItems = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) {}
+    if (!cartItems.length) {
+      cartItems = [
+        { name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
+        { name: "أصيص سيراميك", price: 30, qty: 1 },
+        { name: "باقة العناية", price: 35, qty: 1 }
+      ];
+    }
+    var SUBTOTAL = 0;
+    var itemsList = document.getElementById("summary-items");
+    cartItems.forEach(function (item) {
+      SUBTOTAL += item.price * item.qty;
+      var li = document.createElement("li");
+      var a = document.createElement("span");
+      a.textContent = item.name + " × " + item.qty;
+      var b = document.createElement("span");
+      b.textContent = (item.price * item.qty) + " ر.س";
+      li.appendChild(a);
+      li.appendChild(b);
+      itemsList.appendChild(li);
+    });
     var DELIVERY = 20;
     var discount = 0;
 
@@ -236,6 +254,7 @@
         if (document.getElementById("card-cvv").value.length !== 3) return showError("رمز CVV لازم يكون 3 أرقام.");
       }
 
+      try { localStorage.removeItem(CART_KEY); } catch (err) {}
       var orderId = "GH" + Math.floor(100000 + Math.random() * 900000);
       window.location.href = "order-tracking.html?order=" + orderId;
     });
