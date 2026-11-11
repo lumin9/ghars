@@ -69,8 +69,37 @@
             <label>الشارع ورقم المبنى
               <input type="text" id="street" name="street" placeholder="اسم الشارع، رقم المبنى" required>
             </label>
+            <label class="full">العنوان الوطني المختصر (اختياري)
+              <input type="text" id="short-address" class="ltr" placeholder="مثال: RRRD2929" maxlength="8" autocomplete="off">
+            </label>
+            <div class="full locate">
+              <button type="button" class="btn" id="locate-btn">حددي موقعي الحالي</button>
+              <span id="loc-status" class="note" aria-live="polite"></span>
+              <a id="loc-link" href="#" target="_blank" rel="noopener" hidden>عرض الموقع على الخريطة</a>
+            </div>
             <label class="full">ملاحظات للتوصيل (اختياري)
               <textarea name="notes" rows="2" placeholder="مثال: اتصلي عند الوصول"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="box">
+          <h2>شركة التوصيل</h2>
+          <div class="courier-options">
+            <label class="courier-option">
+              <input type="radio" name="courier" value="aramex" checked>
+              <span><strong>أرامكس</strong><small>التوصيل خلال 1 - 2 يوم عمل</small></span>
+              <b>25 ر.س</b>
+            </label>
+            <label class="courier-option">
+              <input type="radio" name="courier" value="smsa">
+              <span><strong>سمسا إكسبرس</strong><small>التوصيل خلال 2 - 3 أيام عمل</small></span>
+              <b>20 ر.س</b>
+            </label>
+            <label class="courier-option">
+              <input type="radio" name="courier" value="ghars">
+              <span><strong>توصيل غرس</strong><small>مندوب غرس، داخل الرياض خلال 3 أيام</small></span>
+              <b>15 ر.س</b>
             </label>
           </div>
         </section>
@@ -127,7 +156,7 @@
         <dl class="totals">
           <div><dt>المجموع</dt><dd id="subtotal">110 ر.س</dd></div>
           <div><dt>الخصم</dt><dd id="discount">0 ر.س</dd></div>
-          <div><dt>التوصيل</dt><dd id="delivery">20 ر.س</dd></div>
+          <div><dt id="delivery-label">التوصيل</dt><dd id="delivery">25 ر.س</dd></div>
           <div class="grand"><dt>الإجمالي</dt><dd id="total">130 ر.س</dd></div>
         </dl>
 
@@ -171,7 +200,12 @@
       li.appendChild(b);
       itemsList.appendChild(li);
     });
-    var DELIVERY = 20;
+    var COURIERS = {
+      aramex: { name: "أرامكس", fee: 25 },
+      smsa: { name: "سمسا إكسبرس", fee: 20 },
+      ghars: { name: "توصيل غرس", fee: 15 }
+    };
+    var DELIVERY = COURIERS.aramex.fee;
     var discount = 0;
 
     var COUPONS = { "GHARS10": 10 };
@@ -182,6 +216,13 @@
     var errorBox = document.getElementById("form-error");
 
     function fmt(n) { return n + " ر.س"; }
+
+    function updateCourier() {
+      var c = COURIERS[form.elements["courier"].value];
+      DELIVERY = c.fee;
+      document.getElementById("delivery-label").textContent = "التوصيل (" + c.name + ")";
+      updateTotals();
+    }
 
     function updateTotals() {
       document.getElementById("subtotal").textContent = fmt(SUBTOTAL);
@@ -243,6 +284,9 @@
       if (!document.getElementById("district").value) return showError("اختاري الحي.");
       if (!document.getElementById("street").value.trim()) return showError("اكتبي الشارع ورقم المبنى.");
 
+      var shortAddr = document.getElementById("short-address").value;
+      if (shortAddr && !/^[A-Z]{4}\d{4}$/.test(shortAddr)) return showError("العنوان الوطني المختصر لازم يكون 4 حروف وبعدها 4 أرقام، مثل RRRD2929.");
+
       var method = form.elements["payment"].value;
       if (method !== "applepay") {
         if (!document.getElementById("card-name").value.trim()) return showError("اكتبي اسم حامل البطاقة.");
@@ -253,11 +297,39 @@
 
       saveCart([]);
       var orderId = "GH" + Math.floor(100000 + Math.random() * 900000);
-      window.location.href = "order-tracking.html?order=" + orderId;
+      window.location.href = "order-tracking.html?order=" + orderId + "&courier=" + form.elements["courier"].value;
+    });
+
+    form.querySelectorAll('input[name="courier"]').forEach(function (r) {
+      r.addEventListener("change", updateCourier);
+    });
+
+    var locBtn = document.getElementById("locate-btn");
+    var locStatus = document.getElementById("loc-status");
+    var locLink = document.getElementById("loc-link");
+    locBtn.addEventListener("click", function () {
+      if (!navigator.geolocation) {
+        locStatus.textContent = "المتصفح ما يدعم تحديد الموقع، اكتبي العنوان يدويا.";
+        return;
+      }
+      locStatus.textContent = "جاري تحديد موقعك...";
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var lat = pos.coords.latitude.toFixed(5);
+        var lng = pos.coords.longitude.toFixed(5);
+        locStatus.textContent = "تم تحديد موقعك.";
+        locLink.href = "https://www.google.com/maps?q=" + lat + "," + lng;
+        locLink.hidden = false;
+      }, function () {
+        locStatus.textContent = "ما قدرنا نحدد موقعك. اسمحي للمتصفح بالوصول للموقع أو اكتبي العنوان يدويا.";
+      }, { timeout: 10000 });
+    });
+
+    document.getElementById("short-address").addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/[^A-Za-z0-9]/g, "").toUpperCase();
     });
 
     togglePayment();
-    updateTotals();
+    updateCourier();
   </script>
 
 </body>
