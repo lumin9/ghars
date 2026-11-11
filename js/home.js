@@ -10,8 +10,10 @@ document.getElementById("bestSellers").innerHTML = BEST.map(id => {
         <span class="card-cat">${CATEGORY_NAMES[p.cat]}</span>
         <h3><a class="card-title" href="${link}">${p.name}</a></h3>
         <div class="card-foot">
-          <strong class="price">${formatPrice(p.price)}</strong>
-          <button type="button" class="btn btn-small add-btn" data-id="${p.id}">أضيفي للسلة</button>
+          <strong class="price">${p.giftFee ? "<small>من</small> " : ""}${formatPrice(p.price)}</strong>
+          ${p.giftFee
+            ? `<a class="btn btn-small" href="${link}">اختاري النبتة</a>`
+            : `<button type="button" class="btn btn-small add-btn" data-id="${p.id}">أضيفي للسلة</button>`}
         </div>
       </div>
     </article>`;

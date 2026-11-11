@@ -10,9 +10,9 @@ function saveCart(cart) {
 
 function addItemToCart(item, qty = 1) {
   const cart = getCart();
-  const found = cart.find(i => i.id === item.id);
+  const found = !item.message && cart.find(i => i.id === item.id && !i.message);
   if (found) found.qty += qty;
-  else cart.push({ id: item.id, name: item.name, price: item.price, image: item.image, qty });
+  else cart.push({ ...item, id: item.message ? `${item.id}-${Date.now()}` : item.id, qty });
   saveCart(cart);
   updateCartCount();
   showToast(`تمت إضافة ${item.name} للسلة`);
