@@ -4,17 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>السلة | غرس</title>
+  <link rel="icon" href="../images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/style.css?v=4">
+  <link rel="stylesheet" href="../css/cart.css?v=4">
 </head>
 <body>
 
   <header class="navbar">
     <div class="container">
-      <a href="../index.html" class="logo">غرس</a>
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <button type="button" class="menu-btn" aria-label="القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav>
         <ul class="nav-links">
           <li><a href="../index.html">الرئيسية</a></li>
@@ -22,16 +24,17 @@
           <li><a href="plant-finder.html">اختاري نبتتك</a></li>
           <li><a href="care-kit.html">باقة العناية</a></li>
           <li><a href="offers.html">العروض</a></li>
-          <li><a href="cart.html" class="active">السلة</a></li>
+          <li><a href="cart.html" class="active">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
         </ul>
       </nav>
+      <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
     </div>
   </header>
 
   <main class="container cart">
     <h1>سلة التسوق</h1>
 
-    <div id="cart-empty" class="box empty" hidden>
+    <div id="cart-empty" class="box cart-empty" hidden>
       <h2>سلتك فاضية</h2>
       <p>ابدئي باختيار نباتات تعجبك.</p>
       <a href="products.html" class="btn">تصفحي المنتجات</a>
@@ -65,37 +68,21 @@
       <ul>
         <li><a href="products.html">المنتجات</a></li>
         <li><a href="plant-finder.html">اختاري نبتتك</a></li>
-        <li><a href="feedback.html">تواصل معنا</a></li>
+        <li><a class="social" href="https://www.instagram.com/gharsplants/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a></li>
       </ul>
     </div>
   </footer>
 
+  <script src="../js/cart.js?v=4"></script>
+  <script src="../js/nav.js?v=4"></script>
   <script>
-    var KEY = "ghars_cart";
     var DELIVERY = 20;
-
-    var DEMO = [
-      { id: "p1", name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
-      { id: "p2", name: "أصيص سيراميك", price: 30, qty: 1 },
-      { id: "p3", name: "باقة العناية", price: 35, qty: 1 }
-    ];
-
-    function load() {
-      try {
-        var raw = localStorage.getItem(KEY);
-        if (raw === null) { save(DEMO); return DEMO.slice(); }
-        return JSON.parse(raw) || [];
-      } catch (e) { return DEMO.slice(); }
-    }
-
-    function save(items) {
-      try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
-    }
-
-    function fmt(n) { return n + " ر.س"; }
-
-    var cart = load();
+    var cart = getCart();
     var list = document.getElementById("cart-items");
+
+    function imgPath(p) {
+      return /^(https?:|\.\.\/|\/)/.test(p) ? p : "../" + p;
+    }
 
     function makeBtn(text, label, onClick) {
       var b = document.createElement("button");
@@ -104,6 +91,12 @@
       b.setAttribute("aria-label", label);
       b.addEventListener("click", onClick);
       return b;
+    }
+
+    function persist() {
+      saveCart(cart);
+      updateCartCount();
+      render();
     }
 
     function render() {
@@ -120,37 +113,53 @@
 
         var thumb = document.createElement("span");
         thumb.className = "thumb";
-        thumb.textContent = "🌿";
+        if (item.image) {
+          var img = document.createElement("img");
+          img.src = imgPath(item.image);
+          img.alt = "";
+          img.addEventListener("error", function () {
+            thumb.removeChild(img);
+            thumb.textContent = "🌿";
+          });
+          thumb.appendChild(img);
+        } else {
+          thumb.textContent = "🌿";
+        }
 
         var info = document.createElement("div");
         info.className = "info";
         var name = document.createElement("strong");
         name.textContent = item.name;
         var unit = document.createElement("span");
-        unit.textContent = fmt(item.price) + " للقطعة";
+        unit.textContent = formatPrice(item.price) + " للقطعة";
         info.appendChild(name);
         info.appendChild(unit);
+        if (item.message) {
+          var msg = document.createElement("span");
+          msg.className = "msg";
+          msg.textContent = "الرسالة: " + item.message;
+          info.appendChild(msg);
+        }
 
         var qty = document.createElement("div");
         qty.className = "qty";
         var count = document.createElement("span");
         count.textContent = item.qty;
         qty.appendChild(makeBtn("+", "زيادة الكمية", function () {
-          if (cart[i].qty < 10) { cart[i].qty++; save(cart); render(); }
+          if (cart[i].qty < 10) { cart[i].qty++; persist(); }
         }));
         qty.appendChild(count);
         qty.appendChild(makeBtn("−", "إنقاص الكمية", function () {
-          if (cart[i].qty > 1) { cart[i].qty--; save(cart); render(); }
+          if (cart[i].qty > 1) { cart[i].qty--; persist(); }
         }));
 
         var line = document.createElement("strong");
         line.className = "line";
-        line.textContent = fmt(item.price * item.qty);
+        line.textContent = formatPrice(item.price * item.qty);
 
         var remove = makeBtn("حذف", "حذف المنتج", function () {
           cart.splice(i, 1);
-          save(cart);
-          render();
+          persist();
         });
         remove.className = "remove";
 
@@ -163,9 +172,9 @@
       });
 
       var delivery = empty ? 0 : DELIVERY;
-      document.getElementById("subtotal").textContent = fmt(subtotal);
-      document.getElementById("delivery").textContent = fmt(delivery);
-      document.getElementById("total").textContent = fmt(subtotal + delivery);
+      document.getElementById("subtotal").textContent = formatPrice(subtotal);
+      document.getElementById("delivery").textContent = formatPrice(delivery);
+      document.getElementById("total").textContent = formatPrice(subtotal + delivery);
     }
 
     render();
