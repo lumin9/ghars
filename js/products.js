@@ -95,8 +95,10 @@ function cardHTML(p) {
         <h3><button type="button" class="card-open card-title" data-id="${p.id}">${p.name}</button></h3>
         <div class="tags">${tags.join("")}</div>
         <div class="card-foot">
-          <strong class="price">${formatPrice(p.price)}</strong>
-          <button type="button" class="btn btn-small add-btn" data-id="${p.id}">أضيفي للسلة</button>
+          <strong class="price">${p.giftFee ? '<small>من</small> ' : ""}${formatPrice(p.price)}</strong>
+          ${p.giftFee
+            ? `<button type="button" class="btn btn-small gift-choose" data-id="${p.id}">اختاري النبتة</button>`
+            : `<button type="button" class="btn btn-small add-btn" data-id="${p.id}">أضيفي للسلة</button>`}
         </div>
       </div>
     </article>`;
@@ -127,6 +129,16 @@ function openProduct(id) {
   document.getElementById("pdCat").textContent = CATEGORY_NAMES[p.cat];
   document.getElementById("pdName").textContent = p.name;
   document.getElementById("pdPrice").textContent = formatPrice(p.price);
+  const giftPick = document.getElementById("giftPick");
+  giftPick.hidden = !p.giftFee;
+  if (p.giftFee) {
+    document.getElementById("giftPlants").innerHTML = GIFT_PLANTS.map(g => `
+      <label class="pick">
+        <input type="radio" name="giftPlant" value="${g.id}"${g.id === "pothos" ? " checked" : ""}>
+        <span><img src="${IMG_PATH}${g.id}.jpg" alt="" loading="lazy" width="120" height="120"><strong>${g.name}</strong><small>+${g.price}</small></span>
+      </label>`).join("");
+    updateGiftPrice();
+  }
   document.getElementById("pdDesc").textContent = p.desc;
 
   const specs = [`<li><span>الحجم</span>${SIZE_NAMES[p.size]}</li>`];
@@ -139,12 +151,50 @@ function openProduct(id) {
   document.getElementById("pdCareTitle").textContent = isPlant ? "العناية" : "التفاصيل";
   document.getElementById("pdCare").innerHTML = p.care.map(c => `<li>${c}</li>`).join("");
   document.getElementById("pdLink").hidden = !p.kit;
+  document.getElementById("cardMsg").hidden = !p.hasCard;
+  ["msgTo", "msgFrom", "msgText"].forEach(id => { document.getElementById(id).value = ""; });
+  updatePreview();
   qtyInput.value = 1;
 
   dialog.showModal();
   const p2 = new URLSearchParams(location.search); p2.set("id", id);
   history.replaceState(null, "", "?" + p2.toString());
 }
+
+function selectedGiftPlant() {
+  const input = document.querySelector('input[name="giftPlant"]:checked');
+  return input && PRODUCTS.find(x => x.id === input.value);
+}
+
+function updateGiftPrice() {
+  const p = PRODUCTS.find(x => x.id === openId);
+  const plant = selectedGiftPlant();
+  document.getElementById("pdPrice").textContent = formatPrice(p.giftFee + plant.price);
+  document.getElementById("giftNote").textContent = `${plant.name} ${formatPrice(plant.price)} + ${p.giftLabel} ${formatPrice(p.giftFee)}`;
+}
+
+document.getElementById("giftPlants").addEventListener("change", updateGiftPrice);
+
+function updatePreview() {
+  const to = document.getElementById("msgTo").value.trim();
+  const from = document.getElementById("msgFrom").value.trim();
+  const text = document.getElementById("msgText").value.trim();
+  document.getElementById("pvTo").textContent = `إلى: ${to || "..."}`;
+  document.getElementById("pvText").textContent = text || "رسالتك تظهر هنا";
+  document.getElementById("pvFrom").textContent = `من: ${from || "..."}`;
+  document.getElementById("msgCount").textContent = `${document.getElementById("msgText").value.length} / 150`;
+}
+
+function getMessage() {
+  const msg = {
+    to: document.getElementById("msgTo").value.trim(),
+    from: document.getElementById("msgFrom").value.trim(),
+    text: document.getElementById("msgText").value.trim()
+  };
+  return msg.to || msg.from || msg.text ? msg : null;
+}
+
+document.getElementById("cardMsg").addEventListener("input", updatePreview);
 
 function closeProduct() {
   dialog.close();
@@ -157,14 +207,24 @@ document.getElementById("qtyPlus").addEventListener("click", () => { qtyInput.va
 document.getElementById("qtyMinus").addEventListener("click", () => { qtyInput.value = Math.max(1, (+qtyInput.value || 1) - 1); });
 document.getElementById("pdAdd").addEventListener("click", () => {
   const qty = Math.min(20, Math.max(1, parseInt(qtyInput.value, 10) || 1));
-  addToCart(openId, qty);
+  const p = PRODUCTS.find(x => x.id === openId);
+  const item = { id: p.id, name: p.name, price: p.price, image: `images/products/${p.id}.jpg` };
+  if (p.giftFee) {
+    const plant = selectedGiftPlant();
+    item.id = `${p.id}-${plant.id}`;
+    item.name = `${p.name} (${plant.name})`;
+    item.price = p.giftFee + plant.price;
+  }
+  const message = p.hasCard && getMessage();
+  if (message) item.message = message;
+  addItemToCart(item, qty);
   closeProduct();
 });
 
 grid.addEventListener("click", e => {
   const add = e.target.closest(".add-btn");
   if (add) { addToCart(add.dataset.id); return; }
-  const open = e.target.closest(".card-open");
+  const open = e.target.closest(".card-open, .gift-choose");
   if (open) openProduct(open.dataset.id);
 });
 

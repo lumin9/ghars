@@ -92,25 +92,29 @@ const PRODUCTS = [
   { id: "fertilizer", name: "سماد سائل", en: "Plant Food", cat: "tools", price: 39, light: null, size: "small",
     desc: "سماد سائل متوازن يقوي النمو ويعطي الأوراق لون أخضر.",
     care: ["غطاء واحد لكل لتر ماء", "مرة كل أسبوعين في الربيع والصيف", "خففيه في الشتاء"] },
-  { id: "gift-wrapped-plant", name: "نبتة هدية مغلفة", en: "Wrapped Gift Plant", cat: "gifts", price: 99, light: null, size: "small",
-    desc: "نبتة بوتس مغلفة بورق كرافت وشريطة خضراء، جاهزة تنهدى.",
-    care: ["تشمل: نبتة بوتس، تغليف، بطاقة صغيرة", "نوصلها مغلفة داخل الرياض", "تعليمات العناية مرفقة مع الهدية"] },
-  { id: "gift-set", name: "طقم هدية غرس", en: "Gift Set", cat: "gifts", price: 219, light: null, size: "medium",
-    desc: "نبتة في أصيص مع باقة العناية وبطاقة إهداء، هدية متكاملة لأي مناسبة.",
-    care: ["تشمل: نبتة، أصيص، تربة، سماد، بخاخ، بطاقة إهداء", "مغلف وجاهز للتوصيل", "مناسب للتخرج والمنزل الجديد"] },
-  { id: "gift-linen-wrap", name: "تغليف كتان للهدية", en: "Linen Gift Wrap", cat: "gifts", price: 25, light: null, size: "small",
-    desc: "أضيفيه مع أي نبتة ونغلفها لك بقماش كتان وشريطة وبطاقة صغيرة.",
-    care: ["يناسب النباتات الصغيرة والمتوسطة", "اكتبي اسم النبتة في ملاحظات الطلب", "التغليف يتم قبل التوصيل"] },
-  { id: "gift-greeting-card", name: "بطاقة تهنئة", en: "Greeting Card", cat: "gifts", price: 12, light: null, size: "small",
+  { id: "gift-wrapped-plant", hasCard: true, name: "نبتة هدية بتغليف كرافت", en: "Wrapped Gift Plant", cat: "gifts", giftFee: 30, giftLabel: "تغليف كرافت", light: null, size: "small",
+    desc: "اختاري النبتة ونغلفها لك بورق كرافت وشريطة خضراء، جاهزة تنهدى.",
+    care: ["تشمل: النبتة اللي تختارينها، تغليف كرافت، بطاقة صغيرة", "نوصلها مغلفة داخل الرياض", "تعليمات العناية مرفقة مع الهدية"] },
+  { id: "gift-set", hasCard: true, name: "طقم هدية غرس", en: "Gift Set", cat: "gifts", giftFee: 120, giftLabel: "الأصيص وباقة العناية والبطاقة", light: null, size: "medium",
+    desc: "النبتة اللي تختارينها في أصيص سيراميك مع باقة العناية وبطاقة إهداء، هدية متكاملة لأي مناسبة.",
+    care: ["تشمل: النبتة، أصيص سيراميك، تربة، سماد، بخاخ، بطاقة إهداء", "مغلف وجاهز للتوصيل", "مناسب للتخرج والمنزل الجديد"] },
+  { id: "gift-linen-wrap", hasCard: true, name: "نبتة هدية بتغليف كتان", en: "Linen Gift Wrap", cat: "gifts", giftFee: 45, giftLabel: "تغليف كتان", light: null, size: "small",
+    desc: "اختاري النبتة ونغلفها لك بقماش كتان وشريطة وبطاقة صغيرة، تغليف فاخر للمناسبات.",
+    care: ["تشمل: النبتة اللي تختارينها، تغليف كتان، بطاقة صغيرة", "نوصلها مغلفة داخل الرياض", "تعليمات العناية مرفقة مع الهدية"] },
+  { id: "gift-greeting-card", hasCard: true, name: "بطاقة تهنئة", en: "Greeting Card", cat: "gifts", price: 12, light: null, size: "small",
     desc: "بطاقة تهنئة مع ظرف أخضر، نكتب فيها رسالتك بخط اليد.",
-    care: ["اكتبي رسالتك في ملاحظات الطلب", "تنرسل مع الطلب داخل الرياض", "مقاس 12 × 17 سم"] },
+    care: ["اكتبي رسالتك هنا ونطبعها لك بخط اليد", "تنرسل مع الطلب داخل الرياض", "مقاس 12 × 17 سم"] },
   { id: "gift-shopping-bag", name: "كيس هدايا غرس", en: "Gift Bag", cat: "gifts", price: 15, light: null, size: "small",
     desc: "كيس ورقي بشعار غرس يناسب النباتات الصغيرة والأدوات.",
     care: ["يناسب أصيص حتى قطر 15 سم", "ورق مقوى قابل لإعادة التدوير", "مقابض قماش متينة"] },
-  { id: "gift-card", name: "بطاقة هدية غرس", en: "Gift Card", cat: "gifts", price: 100, light: null, size: "small",
+  { id: "gift-card", hasCard: true, name: "بطاقة هدية غرس", en: "Gift Card", cat: "gifts", price: 100, light: null, size: "small",
     desc: "خلي اللي تحبينه يختار نبتته بنفسه. بطاقة بقيمة 100 ر.س تُستخدم في المتجر.",
     care: ["القيمة: 100 ر.س", "صالحة لمدة سنة", "تُستخدم على كل المنتجات"] }
 ];
+
+const GIFT_PLANTS = PRODUCTS.filter(p => (p.cat === "indoor" || p.cat === "outdoor") && p.size !== "large");
+const CHEAPEST_GIFT_PLANT = Math.min(...GIFT_PLANTS.map(p => p.price));
+PRODUCTS.forEach(p => { if (p.giftFee) p.price = p.giftFee + CHEAPEST_GIFT_PLANT; });
 
 const CATEGORY_NAMES = { indoor: "نباتات داخلية", outdoor: "نباتات خارجية", pots: "أصص", tools: "أدوات العناية", gifts: "هدايا" };
 const LIGHT_NAMES = { low: "إضاءة قليلة", medium: "إضاءة متوسطة", high: "إضاءة عالية" };

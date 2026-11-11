@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style.css?v=4">
 </head>
 <body>
 
@@ -16,6 +16,7 @@
   <header class="navbar">
     <div class="container">
       <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <button type="button" class="menu-btn" aria-label="القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav>
         <ul class="nav-links">
           <li><a href="../index.html">الرئيسية</a></li>
@@ -123,6 +124,26 @@
         <ul class="pd-specs" id="pdSpecs"></ul>
         <h3 id="pdCareTitle">العناية</h3>
         <ul class="pd-care" id="pdCare"></ul>
+        <div class="gift-pick" id="giftPick" hidden>
+          <h3>اختاري النبتة اللي في الهدية</h3>
+          <div class="pick-grid gift-grid" id="giftPlants"></div>
+          <p class="gift-note" id="giftNote"></p>
+        </div>
+        <div class="card-msg" id="cardMsg" hidden>
+          <h3>اكتبي على البطاقة <small>(اختياري)</small></h3>
+          <div class="msg-fields">
+            <label>إلى<input type="text" id="msgTo" maxlength="30" placeholder="اسم المُهدى إليه"></label>
+            <label>من<input type="text" id="msgFrom" maxlength="30" placeholder="اسمك"></label>
+          </div>
+          <label class="msg-text">الرسالة<textarea id="msgText" maxlength="150" rows="3" placeholder="مثلاً: مبروك البيت الجديد، عساه بيت خير"></textarea></label>
+          <span class="msg-count" id="msgCount">0 / 150</span>
+          <div class="msg-preview" aria-hidden="true">
+            <img src="../images/logo.png" alt="">
+            <p class="pv-to" id="pvTo"></p>
+            <p class="pv-text" id="pvText"></p>
+            <p class="pv-from" id="pvFrom"></p>
+          </div>
+        </div>
         <div class="pd-buy">
           <div class="qty" aria-label="الكمية">
             <button type="button" id="qtyPlus" aria-label="زيادة">+</button>
@@ -152,8 +173,9 @@
     </div>
   </footer>
 
-  <script src="../js/products-data.js"></script>
-  <script src="../js/cart.js"></script>
-  <script src="../js/products.js"></script>
+  <script src="../js/products-data.js?v=4"></script>
+  <script src="../js/cart.js?v=4"></script>
+  <script src="../js/products.js?v=4"></script>
+  <script src="../js/nav.js?v=4"></script>
 </body>
 </html>
