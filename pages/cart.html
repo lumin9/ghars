@@ -70,32 +70,15 @@
     </div>
   </footer>
 
+  <script src="../js/cart.js"></script>
   <script>
-    var KEY = "ghars_cart";
     var DELIVERY = 20;
-
-    var DEMO = [
-      { id: "p1", name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
-      { id: "p2", name: "أصيص سيراميك", price: 30, qty: 1 },
-      { id: "p3", name: "باقة العناية", price: 35, qty: 1 }
-    ];
-
-    function load() {
-      try {
-        var raw = localStorage.getItem(KEY);
-        if (raw === null) { save(DEMO); return DEMO.slice(); }
-        return JSON.parse(raw) || [];
-      } catch (e) { return DEMO.slice(); }
-    }
-
-    function save(items) {
-      try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
-    }
-
-    function fmt(n) { return n + " ر.س"; }
-
-    var cart = load();
+    var cart = getCart();
     var list = document.getElementById("cart-items");
+
+    function imgPath(p) {
+      return /^(https?:|\.\.\/|\/)/.test(p) ? p : "../" + p;
+    }
 
     function makeBtn(text, label, onClick) {
       var b = document.createElement("button");
@@ -104,6 +87,12 @@
       b.setAttribute("aria-label", label);
       b.addEventListener("click", onClick);
       return b;
+    }
+
+    function persist() {
+      saveCart(cart);
+      updateCartCount();
+      render();
     }
 
     function render() {
@@ -120,37 +109,53 @@
 
         var thumb = document.createElement("span");
         thumb.className = "thumb";
-        thumb.textContent = "🌿";
+        if (item.image) {
+          var img = document.createElement("img");
+          img.src = imgPath(item.image);
+          img.alt = "";
+          img.addEventListener("error", function () {
+            thumb.removeChild(img);
+            thumb.textContent = "🌿";
+          });
+          thumb.appendChild(img);
+        } else {
+          thumb.textContent = "🌿";
+        }
 
         var info = document.createElement("div");
         info.className = "info";
         var name = document.createElement("strong");
         name.textContent = item.name;
         var unit = document.createElement("span");
-        unit.textContent = fmt(item.price) + " للقطعة";
+        unit.textContent = formatPrice(item.price) + " للقطعة";
         info.appendChild(name);
         info.appendChild(unit);
+        if (item.message) {
+          var msg = document.createElement("span");
+          msg.className = "msg";
+          msg.textContent = "الرسالة: " + item.message;
+          info.appendChild(msg);
+        }
 
         var qty = document.createElement("div");
         qty.className = "qty";
         var count = document.createElement("span");
         count.textContent = item.qty;
         qty.appendChild(makeBtn("+", "زيادة الكمية", function () {
-          if (cart[i].qty < 10) { cart[i].qty++; save(cart); render(); }
+          if (cart[i].qty < 10) { cart[i].qty++; persist(); }
         }));
         qty.appendChild(count);
         qty.appendChild(makeBtn("−", "إنقاص الكمية", function () {
-          if (cart[i].qty > 1) { cart[i].qty--; save(cart); render(); }
+          if (cart[i].qty > 1) { cart[i].qty--; persist(); }
         }));
 
         var line = document.createElement("strong");
         line.className = "line";
-        line.textContent = fmt(item.price * item.qty);
+        line.textContent = formatPrice(item.price * item.qty);
 
         var remove = makeBtn("حذف", "حذف المنتج", function () {
           cart.splice(i, 1);
-          save(cart);
-          render();
+          persist();
         });
         remove.className = "remove";
 
@@ -163,9 +168,9 @@
       });
 
       var delivery = empty ? 0 : DELIVERY;
-      document.getElementById("subtotal").textContent = fmt(subtotal);
-      document.getElementById("delivery").textContent = fmt(delivery);
-      document.getElementById("total").textContent = fmt(subtotal + delivery);
+      document.getElementById("subtotal").textContent = formatPrice(subtotal);
+      document.getElementById("delivery").textContent = formatPrice(delivery);
+      document.getElementById("total").textContent = formatPrice(subtotal + delivery);
     }
 
     render();
