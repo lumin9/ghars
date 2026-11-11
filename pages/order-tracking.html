@@ -48,6 +48,7 @@
         <div>
           <h2>طلب رقم <span id="order-id" dir="ltr"></span></h2>
           <p id="status-text" class="status-text"></p>
+          <p id="courier-text" class="status-text" hidden></p>
         </div>
         <div class="eta">
           <span>الوصول المتوقع</span>
@@ -91,6 +92,10 @@
       "تم توصيل طلبك. نتمنى لك نبتة سعيدة!"
     ];
 
+    var COURIER_NAMES = { aramex: "أرامكس", smsa: "سمسا إكسبرس", ghars: "توصيل غرس" };
+    var params = new URLSearchParams(window.location.search);
+    var courierKey = params.get("courier");
+
     var form = document.getElementById("track-form");
     var input = document.getElementById("order-input");
     var errorBox = document.getElementById("track-error");
@@ -118,6 +123,14 @@
         li.className = n < stage ? "done" : (n === stage ? "current" : "");
       });
 
+      var courierText = document.getElementById("courier-text");
+      if (courierKey && COURIER_NAMES[courierKey] && id === fromId) {
+        courierText.textContent = "شركة التوصيل: " + COURIER_NAMES[courierKey];
+        courierText.hidden = false;
+      } else {
+        courierText.hidden = true;
+      }
+
       errorBox.hidden = true;
       result.hidden = false;
     }
@@ -134,7 +147,8 @@
       show(id, stageFor(id));
     });
 
-    var fromCheckout = new URLSearchParams(window.location.search).get("order");
+    var fromCheckout = params.get("order");
+    var fromId = fromCheckout ? fromCheckout.toUpperCase() : "";
     if (fromCheckout && /^GH\d{6}$/.test(fromCheckout.toUpperCase())) {
       input.value = fromCheckout.toUpperCase();
       show(fromCheckout.toUpperCase(), 1);
