@@ -51,6 +51,30 @@
 .pay-option:has(input:checked) { border-color: var(--green); background: var(--green-pale); }
 .pay-option input { accent-color: var(--green); }
 
+.courier-options { display: grid; gap: 10px; }
+.courier-option {
+  display: flex; align-items: center; gap: 12px;
+  border: 1.5px solid var(--green-light);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  cursor: pointer;
+  background: #fff;
+}
+.courier-option:hover { background: var(--green-pale); }
+.courier-option:has(input:checked) { border-color: var(--green); background: var(--green-pale); }
+.courier-option input { accent-color: var(--green); }
+.courier-option span { display: grid; flex: 1; }
+.courier-option strong { color: var(--green-dark); }
+.courier-option small { color: var(--muted); }
+.courier-option b { color: var(--green-dark); }
+
+.locate { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.locate .btn { padding: 8px 18px; }
+.locate .note { margin: 0; }
+.locate a { color: var(--green); text-decoration: underline; }
+.locate a[hidden] { display: none; }
+.fields input.ltr { direction: ltr; text-align: right; }
+
 .summary { position: sticky; top: 16px; }
 .summary-items { list-style: none; margin-bottom: 14px; }
 .summary-items li {
