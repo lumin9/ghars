@@ -106,7 +106,7 @@
           </div>
 
           <p id="applepay-note" class="note" hidden>سيظهر لك طلب تأكيد Apple Pay بعد الضغط على زر تأكيد الطلب.</p>
-          <p class="demo-note"> الدفع للعرض فقط ولا تُحفظ أي بيانات بطاقة.</p>
+          <p class="demo-note">هذا مشروع تعليمي: الدفع للعرض فقط ولا تُحفظ أي بيانات بطاقة.</p>
         </section>
       </div>
 
@@ -150,17 +150,10 @@
     </div>
   </footer>
 
+  <script src="../js/cart.js"></script>
   <script>
-    var CART_KEY = "ghars_cart";
-    var cartItems = [];
-    try { cartItems = JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) {}
-    if (!cartItems.length) {
-      cartItems = [
-        { name: "بوتس (نبتة داخلية)", price: 45, qty: 1 },
-        { name: "أصيص سيراميك", price: 30, qty: 1 },
-        { name: "باقة العناية", price: 35, qty: 1 }
-      ];
-    }
+    var cartItems = getCart();
+    if (!cartItems.length) { window.location.href = "cart.html"; }
     var SUBTOTAL = 0;
     var itemsList = document.getElementById("summary-items");
     cartItems.forEach(function (item) {
@@ -254,7 +247,7 @@
         if (document.getElementById("card-cvv").value.length !== 3) return showError("رمز CVV لازم يكون 3 أرقام.");
       }
 
-      try { localStorage.removeItem(CART_KEY); } catch (err) {}
+      saveCart([]);
       var orderId = "GH" + Math.floor(100000 + Math.random() * 900000);
       window.location.href = "order-tracking.html?order=" + orderId;
     });
