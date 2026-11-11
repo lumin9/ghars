@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المنتجات | غرس</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html" class="active">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
+        </ul>
+      </nav>
+      <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
+    </div>
+  </header>
+
+  <main>
+    <img class="leaf-corner" src="../images/monstera-leaf.png" alt="">
+
+    <section class="page-head">
+      <div class="container">
+        <h1 id="pageTitle">كل المنتجات</h1>
+        <p>نباتات داخلية وخارجية، أصص، أدوات عناية، وهدايا. فلتري حسب النوع والسعر والإضاءة والحجم.</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="cat-tabs" role="tablist" aria-label="الأقسام">
+        <button type="button" class="cat-tab" data-cat="all">الكل</button>
+        <button type="button" class="cat-tab" data-cat="indoor">نباتات داخلية</button>
+        <button type="button" class="cat-tab" data-cat="outdoor">نباتات خارجية</button>
+        <button type="button" class="cat-tab" data-cat="pots">أصص</button>
+        <button type="button" class="cat-tab" data-cat="tools">أدوات العناية</button>
+        <button type="button" class="cat-tab" data-cat="gifts">هدايا</button>
+      </div>
+    </section>
+
+    <section class="container shop">
+      <aside class="filters" aria-label="البحث والفلترة">
+        <button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterForm">البحث والفلترة</button>
+        <form id="filterForm">
+          <div class="filter-group">
+            <label for="search" class="filter-title">البحث</label>
+            <input type="search" id="search" name="q" class="search-input" placeholder="مثلاً: مونستيرا، أصيص، هدية">
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-title" id="priceTitle">السعر</span>
+            <div class="price-row">
+              <label>من <input type="number" id="minPrice" name="min" min="0" step="5" placeholder="0" inputmode="numeric"></label>
+              <label>إلى <input type="number" id="maxPrice" name="max" min="0" step="5" placeholder="300" inputmode="numeric"></label>
+              <span>ر.س</span>
+            </div>
+          </div>
+
+          <fieldset class="filter-group">
+            <legend class="filter-title">الإضاءة <small>(للنباتات)</small></legend>
+            <label class="chip"><input type="checkbox" name="light" value="low"><span>قليلة<small>بعيد عن النافذة</small></span></label>
+            <label class="chip"><input type="checkbox" name="light" value="medium"><span>متوسطة<small>قريب من نافذة</small></span></label>
+            <label class="chip"><input type="checkbox" name="light" value="high"><span>عالية<small>شمس مباشرة</small></span></label>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend class="filter-title">الحجم</legend>
+            <label class="chip"><input type="checkbox" name="size" value="small"><span>صغير<small>مكتب أو رف</small></span></label>
+            <label class="chip"><input type="checkbox" name="size" value="medium"><span>متوسط<small>ركن في الغرفة</small></span></label>
+            <label class="chip"><input type="checkbox" name="size" value="large"><span>كبير<small>صالة أو حديقة</small></span></label>
+          </fieldset>
+
+          <button type="reset" class="btn btn-outline btn-block">مسح الفلاتر</button>
+        </form>
+      </aside>
+
+      <div class="results">
+        <div class="results-bar">
+          <p id="resultCount" aria-live="polite"></p>
+          <label class="sort">ترتيب حسب
+            <select id="sort">
+              <option value="default">الأكثر طلباً</option>
+              <option value="price-asc">السعر: من الأقل</option>
+              <option value="price-desc">السعر: من الأعلى</option>
+              <option value="name">الاسم</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="product-grid" id="grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <strong>ما لقينا منتجات بهذي الفلاتر</strong>
+          <p>جربي تغيرين الإضاءة أو الحجم، أو امسحي الفلاتر.</p>
+          <button type="button" class="btn btn-outline" id="emptyReset">مسح الفلاتر</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="product-dialog" id="productDialog" aria-labelledby="pdName">
+    <button type="button" class="dialog-close" id="dialogClose" aria-label="إغلاق">&times;</button>
+    <div class="pd">
+      <img class="pd-img" id="pdImg" src="" alt="">
+      <div class="pd-info">
+        <span class="badge" id="pdCat"></span>
+        <h2 id="pdName"></h2>
+        <p class="pd-price" id="pdPrice"></p>
+        <p class="pd-desc" id="pdDesc"></p>
+        <ul class="pd-specs" id="pdSpecs"></ul>
+        <h3 id="pdCareTitle">العناية</h3>
+        <ul class="pd-care" id="pdCare"></ul>
+        <div class="pd-buy">
+          <div class="qty" aria-label="الكمية">
+            <button type="button" id="qtyPlus" aria-label="زيادة">+</button>
+            <input type="number" id="qty" value="1" min="1" max="20" aria-label="الكمية">
+            <button type="button" id="qtyMinus" aria-label="نقصان">&minus;</button>
+          </div>
+          <button type="button" class="btn" id="pdAdd">أضيفي للسلة</button>
+        </div>
+        <a class="pd-link" id="pdLink" href="care-kit.html" hidden>تفاصيل الباقة &larr;</a>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a class="social" href="https://www.instagram.com/gharsplants/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/products-data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>

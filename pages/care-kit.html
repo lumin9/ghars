@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>باقة العناية | غرس</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html" class="active">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
+        </ul>
+      </nav>
+      <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
+    </div>
+  </header>
+
+  <main>
+    <img class="leaf-corner" src="../images/monstera-leaf.png" alt="">
+
+    <section class="page-head">
+      <div class="container">
+        <h1>باقة العناية</h1>
+        <p>كل اللي تحتاجه نبتتك في باقة وحدة، مع تعليمات عناية بسيطة خطوة بخطوة.</p>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="kit-show">
+        <img src="../images/products/care-kit.jpg" alt="باقة العناية: تربة وسماد وبخاخ وبطاقة تعليمات">
+        <div class="kit-info">
+          <span class="badge">أدوات العناية</span>
+          <h2>باقة العناية الأساسية</h2>
+          <p class="pd-price" id="kitPrice"></p>
+          <p class="pd-desc">تناسب كل النباتات الداخلية، وتساعدك تبدئين صح من أول يوم.</p>
+          <ul class="kit-items">
+            <li><img src="../images/products/potting-soil.jpg" alt=""><div><strong>تربة زراعة</strong><span>خفيفة وجيدة التصريف، 5 لتر</span></div></li>
+            <li><img src="../images/products/fertilizer.jpg" alt=""><div><strong>سماد سائل</strong><span>يقوي النمو ويعطي الأوراق لون أخضر</span></div></li>
+            <li><img src="../images/products/spray-bottle.jpg" alt=""><div><strong>بخاخ رذاذ</strong><span>يرطب الأوراق في جو الرياض الجاف</span></div></li>
+            <li><span class="kit-card-icon" aria-hidden="true">✎</span><div><strong>بطاقة تعليمات</strong><span>ري، إضاءة، وتسميد خطوة بخطوة</span></div></li>
+          </ul>
+          <p class="kit-save" id="kitSave"></p>
+          <div class="pd-buy">
+            <div class="qty" aria-label="الكمية">
+              <button type="button" id="kitPlus" aria-label="زيادة">+</button>
+              <input type="number" id="kitQty" value="1" min="1" max="20" aria-label="الكمية">
+              <button type="button" id="kitMinus" aria-label="نقصان">&minus;</button>
+            </div>
+            <button type="button" class="btn" id="kitAdd">أضيفي الباقة للسلة</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="build">
+      <h2>ابني باقتك: نبتة + أصيص + عناية</h2>
+      <p class="section-note">اختاري النبتة والأصيص، ونضيف لهم باقة العناية بخصم <strong>15%</strong> على المجموع.</p>
+
+      <div class="builder">
+        <form class="builder-steps" id="builderForm">
+          <fieldset class="build-step">
+            <legend><span class="num">1</span>اختاري النبتة</legend>
+            <div class="pick-filter" role="group" aria-label="نوع النبتة">
+              <button type="button" class="cat-tab" data-type="all" aria-selected="true">الكل</button>
+              <button type="button" class="cat-tab" data-type="indoor" aria-selected="false">داخلية</button>
+              <button type="button" class="cat-tab" data-type="outdoor" aria-selected="false">خارجية</button>
+            </div>
+            <div class="pick-grid" id="plantPicks"></div>
+          </fieldset>
+
+          <fieldset class="build-step">
+            <legend><span class="num">2</span>اختاري الأصيص</legend>
+            <div class="pick-grid pick-grid-pots" id="potPicks"></div>
+          </fieldset>
+
+          <fieldset class="build-step">
+            <legend><span class="num">3</span>باقة العناية</legend>
+            <p class="included"><span aria-hidden="true">✓</span> مضافة تلقائياً: تربة، سماد، بخاخ، وبطاقة تعليمات</p>
+          </fieldset>
+        </form>
+
+        <aside class="summary" aria-live="polite">
+          <img id="sumImg" src="" alt="">
+          <h3>ملخص باقتك</h3>
+          <ul class="sum-lines" id="sumLines"></ul>
+          <div class="sum-total"><span>المجموع</span><strong id="sumTotal"></strong></div>
+          <button type="button" class="btn btn-block" id="bundleAdd">أضيفي باقتك للسلة</button>
+          <p class="sum-note">وعندك كود <span class="code">GHARS10</span> لخصم إضافي في السلة.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container">
+      <h2>كيف تستخدمين الباقة؟</h2>
+      <ol class="care-steps">
+        <li><span class="num">1</span><strong>انقلي النبتة</strong><p>حطي طبقة تربة بأسفل الأصيص، ثم النبتة، وكملي بالتربة حول الجذور بدون ضغط قوي.</p></li>
+        <li><span class="num">2</span><strong>أول ري</strong><p>اسقيها لين يطلع الماء من فتحة التصريف، وبعدها اسقيها حسب بطاقة التعليمات.</p></li>
+        <li><span class="num">3</span><strong>رشي الأوراق</strong><p>استخدمي البخاخ الصبح مرتين بالأسبوع، خصوصاً مع المكيف وجو الرياض الجاف.</p></li>
+        <li><span class="num">4</span><strong>سمديها</strong><p>غطاء سماد لكل لتر ماء، مرة كل أسبوعين في الربيع والصيف، وخففيه في الشتاء.</p></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a class="social" href="https://www.instagram.com/gharsplants/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/products-data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/care-kit.js"></script>
+</body>
+</html>
