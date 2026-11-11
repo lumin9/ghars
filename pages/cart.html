@@ -49,10 +49,9 @@
         <h2>ملخص السلة</h2>
         <dl class="totals">
           <div><dt>المجموع</dt><dd id="subtotal"></dd></div>
-          <div><dt>التوصيل</dt><dd id="delivery"></dd></div>
-          <div class="grand"><dt>الإجمالي</dt><dd id="total"></dd></div>
+          <div><dt>التوصيل</dt><dd>يُحدد في صفحة الدفع</dd></div>
         </dl>
-        <p class="note">يمكنك إضافة كود الخصم في صفحة الدفع.</p>
+        <p class="note">تختارين شركة التوصيل وتضيفين كود الخصم في صفحة الدفع.</p>
         <a href="checkout.html" class="btn btn-block">إتمام الطلب</a>
         <a href="products.html" class="back-link">متابعة التسوق</a>
       </aside>
@@ -76,7 +75,6 @@
   <script src="../js/cart.js?v=4"></script>
   <script src="../js/nav.js?v=4"></script>
   <script>
-    var DELIVERY = 20;
     var cart = getCart();
     var list = document.getElementById("cart-items");
 
@@ -171,10 +169,7 @@
         list.appendChild(li);
       });
 
-      var delivery = empty ? 0 : DELIVERY;
       document.getElementById("subtotal").textContent = formatPrice(subtotal);
-      document.getElementById("delivery").textContent = formatPrice(delivery);
-      document.getElementById("total").textContent = formatPrice(subtotal + delivery);
     }
 
     render();
