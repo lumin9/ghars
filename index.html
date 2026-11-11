@@ -23,7 +23,7 @@
           <li><a href="pages/plant-finder.html">اختاري نبتتك</a></li>
           <li><a href="pages/care-kit.html">باقة العناية</a></li>
           <li><a href="pages/offers.html">العروض</a></li>
-          <li><a href="pages/cart.html">السلة</a></li>
+          <li><a href="pages/cart.html">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
         </ul>
       </nav>
       <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
@@ -33,15 +33,23 @@
   <main>
     <img class="leaf-corner" src="images/monstera-leaf.png" alt="">
     <section class="hero">
-      <img class="hang" src="images/pothos-hanging.png" alt="">
       <div class="container">
         <div class="hero-text">
           <h1>اختاري النبتة اللي تعيش في بيتك</h1>
-          <p>نباتات داخلية وخارجية وأصص وأدوات عناية، مع توصيل داخل الرياض.</p>
+          <p>نباتات داخلية وخارجية وأصص وأدوات عناية وهدايا، مع توصيل داخل الرياض.</p>
           <div class="hero-actions">
             <a href="#find" class="btn">ابدئي باختيار نبتتك</a>
             <a href="pages/products.html" class="btn btn-outline">تصفحي المنتجات</a>
           </div>
+          <a class="hero-plants" href="pages/products.html?cat=indoor">
+            <span class="stack">
+              <img src="images/products/monstera.jpg" alt="">
+              <img src="images/products/snake-plant.jpg" alt="">
+              <img src="images/products/peace-lily.jpg" alt="">
+              <img src="images/products/pothos.jpg" alt="">
+            </span>
+            <span><strong>+30 نبتة ومنتج</strong>داخلية وخارجية، تناسب جو الرياض</span>
+          </a>
         </div>
       </div>
     </section>
@@ -86,22 +94,90 @@
     </section>
 
     <section class="section container">
-      <h2>تسوقي حسب القسم</h2>
+      <div class="section-head">
+        <h2>تسوقي حسب القسم</h2>
+        <a href="pages/products.html" class="see-all">كل المنتجات &larr;</a>
+      </div>
       <div class="categories">
-        <a class="category" href="pages/products.html?cat=indoor">نباتات داخلية</a>
-        <a class="category" href="pages/products.html?cat=outdoor">نباتات خارجية</a>
-        <a class="category" href="pages/products.html?cat=pots">أصص</a>
-        <a class="category" href="pages/products.html?cat=tools">أدوات العناية</a>
+        <a class="category" href="pages/products.html?cat=indoor"><img src="images/products/monstera.jpg" alt="" loading="lazy"><span>نباتات داخلية</span></a>
+        <a class="category" href="pages/products.html?cat=outdoor"><img src="images/products/bougainvillea.jpg" alt="" loading="lazy"><span>نباتات خارجية</span></a>
+        <a class="category" href="pages/products.html?cat=pots"><img src="images/products/terracotta-pot.jpg" alt="" loading="lazy"><span>أصص</span></a>
+        <a class="category" href="pages/products.html?cat=tools"><img src="images/products/watering-can.jpg" alt="" loading="lazy"><span>أدوات العناية</span></a>
+        <a class="category" href="pages/products.html?cat=gifts"><img src="images/products/gift-wrapped-plant.jpg" alt="" loading="lazy"><span>هدايا</span></a>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="section-head">
+        <h2>الأكثر طلباً</h2>
+        <a href="pages/products.html" class="see-all">شوفي الكل &larr;</a>
+      </div>
+      <div class="product-grid home-grid" id="bestSellers"></div>
+    </section>
+
+    <section class="section light-band">
+      <div class="container">
+        <h2>نبتة لكل زاوية في بيتك</h2>
+        <p class="section-note">مهما كانت الإضاءة عندك، فيه نبتة تعيش فيها.</p>
+        <div class="light-cards">
+          <a class="light-card light-low" href="pages/products.html?light=low">
+            <div class="light-plants">
+              <img src="images/products/snake-plant.jpg" alt="سانسيفيريا" loading="lazy">
+              <img src="images/products/zz-plant.jpg" alt="زاميا" loading="lazy">
+              <img src="images/products/pothos.jpg" alt="بوتس" loading="lazy">
+            </div>
+            <strong>إضاءة قليلة</strong>
+            <span>للممرات والغرف البعيدة عن النافذة</span>
+          </a>
+          <a class="light-card light-medium" href="pages/products.html?light=medium">
+            <div class="light-plants">
+              <img src="images/products/monstera.jpg" alt="مونستيرا" loading="lazy">
+              <img src="images/products/rubber-plant.jpg" alt="نبتة المطاط" loading="lazy">
+              <img src="images/products/areca-palm.jpg" alt="نخلة الأريكا" loading="lazy">
+            </div>
+            <strong>إضاءة متوسطة</strong>
+            <span>للصالة وجنب الشبابيك</span>
+          </a>
+          <a class="light-card light-high" href="pages/products.html?light=high">
+            <div class="light-plants">
+              <img src="images/products/olive-tree.jpg" alt="شجرة زيتون" loading="lazy">
+              <img src="images/products/aloe-vera.jpg" alt="ألوفيرا" loading="lazy">
+              <img src="images/products/lemon-tree.jpg" alt="شجرة ليمون" loading="lazy">
+            </div>
+            <strong>إضاءة عالية</strong>
+            <span>للبلكونة والحوش والشمس المباشرة</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="adTitle">
+      <div class="ad-spot">
+        <div class="ad-text">
+          <span class="ad-label">إعلان</span>
+          <h2 id="adTitle">من جيران غرس</h2>
+          <p>مساحة نزرع فيها التعاون: تعرفي على متجر زميلاتنا وزوري موقعهم.</p>
+          <a class="btn btn-light ad-btn" href="#" target="_blank" rel="noopener">زوري موقعهم <span aria-hidden="true">&#8599;</span></a>
+        </div>
+        <a class="ad-frame" href="#" target="_blank" rel="noopener" aria-label="زوري موقع زميلاتنا">
+          <svg class="ropes" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M50 2 L6 40 M50 2 L94 40"/></svg>
+          <span class="hook" aria-hidden="true"></span>
+          <span class="ad-board">
+            <span class="ad-placeholder">صورة إعلانهم هنا</span>
+          </span>
+          <img class="ad-leaf" src="images/monstera-leaf.png" alt="" aria-hidden="true">
+        </a>
       </div>
     </section>
 
     <section class="section container">
       <div class="kit-banner">
-        <div>
+        <img src="images/products/bundle.jpg" alt="باقة نبتة وأصيص وأدوات عناية">
+        <div class="kit-text">
           <h2>باقة نبتة + أصيص + عناية</h2>
-          <p>تراب وسماد وبخاخ مع تعليمات عناية بسيطة. استخدمي كود <span class="code">GHARS10</span> واحصلي على خصم 10%.</p>
+          <p>اختاري نبتتك والأصيص، ونضيف تراب وسماد وبخاخ مع تعليمات عناية بسيطة، بخصم 15%. واستخدمي كود <span class="code">GHARS10</span> لخصم إضافي 10%.</p>
+          <a href="pages/care-kit.html" class="btn">ابني باقتك</a>
         </div>
-        <a href="pages/care-kit.html" class="btn">شوفي الباقة</a>
       </div>
     </section>
   </main>
@@ -120,5 +196,8 @@
     </div>
   </footer>
 
+  <script src="js/products-data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

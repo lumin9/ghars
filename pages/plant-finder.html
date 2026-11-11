@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>اختاري نبتتك | غرس</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html" class="active">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html">العروض</a></li>
+          <li><a href="cart.html">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
+        </ul>
+      </nav>
+      <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
+    </div>
+  </header>
+
+  <main>
+    <img class="leaf-corner" src="../images/monstera-leaf.png" alt="">
+
+    <section class="page-head page-head-tall">
+      <div class="container">
+        <h1>اختاري النبتة اللي تعيش في بيتك</h1>
+        <p>ثلاثة أسئلة عن مكانك، ونرشح لك النباتات اللي تناسبه، مع سبب كل ترشيح والأصيص المناسب له.</p>
+      </div>
+    </section>
+
+    <section class="container quiz-wrap">
+      <form class="quiz" id="finderForm" action="plant-finder.html" method="get">
+        <div class="quiz-head">
+          <h2>جاوبي على الأسئلة</h2>
+          <p>تقدرين تجاوبين على سؤال واحد أو أكثر، والنتائج تتحدث مباشرة.</p>
+        </div>
+        <div class="step" role="radiogroup" aria-labelledby="q1">
+          <h3 id="q1"><span class="num">1</span>وين بتحطين النبتة؟</h3>
+          <label class="chip"><input type="radio" name="place" value="inside"><span>داخل البيت<small>غرفة، صالة، مكتب</small></span></label>
+          <label class="chip"><input type="radio" name="place" value="outside"><span>خارج البيت<small>حوش، بلكونة، حديقة</small></span></label>
+        </div>
+        <div class="step" role="radiogroup" aria-labelledby="q2">
+          <h3 id="q2"><span class="num">2</span>كم الإضاءة في المكان؟</h3>
+          <label class="chip"><input type="radio" name="light" value="low"><span>قليلة<small>بعيد عن النافذة</small></span></label>
+          <label class="chip"><input type="radio" name="light" value="medium"><span>متوسطة<small>قريب من نافذة</small></span></label>
+          <label class="chip"><input type="radio" name="light" value="high"><span>عالية<small>شمس مباشرة</small></span></label>
+        </div>
+        <div class="step" role="radiogroup" aria-labelledby="q3">
+          <h3 id="q3"><span class="num">3</span>كم حجم المساحة؟</h3>
+          <label class="chip"><input type="radio" name="size" value="small"><span>صغيرة<small>مكتب أو رف</small></span></label>
+          <label class="chip"><input type="radio" name="size" value="medium"><span>متوسطة<small>ركن في الغرفة</small></span></label>
+          <label class="chip"><input type="radio" name="size" value="large"><span>كبيرة<small>صالة أو حديقة</small></span></label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn">اعرضي لي النباتات المناسبة</button>
+          <button type="reset" class="btn btn-outline">مسح الاختيارات</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="section container" id="results" tabindex="-1">
+      <div class="finder-start" id="finderStart">
+        <strong>ابدئي بالإجابة على سؤال واحد على الأقل</strong>
+        <p>مثلاً: اختاري «داخل البيت» و«إضاءة قليلة» وشوفي النباتات اللي تتحمل.</p>
+      </div>
+
+      <div id="finderResults" hidden>
+        <div class="answers" id="answers"></div>
+
+        <h2 id="matchTitle">تناسب مكانك تماماً</h2>
+        <div class="finder-grid" id="matchGrid"></div>
+        <p class="finder-none" id="noMatch" hidden>ما فيه نبتة تطابق كل اختياراتك، شوفي الخيارات القريبة تحت أو غيري إجابة.</p>
+
+        <div id="nearBox" hidden>
+          <h2>خيارات قريبة</h2>
+          <p class="section-note">تناسب المكان والإضاءة، بس حجمها يختلف شوي عن اللي اخترتيه.</p>
+          <div class="finder-grid" id="nearGrid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a class="social" href="https://www.instagram.com/gharsplants/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/products-data.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/plant-finder.js"></script>
+</body>
+</html>
