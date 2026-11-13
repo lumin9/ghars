@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>العروض | غرس</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=10">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../images/logo.png" alt=""><span>غرس</span></a>
+      <button type="button" class="menu-btn" aria-label="القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+          <li><a href="care-kit.html">باقة العناية</a></li>
+          <li><a href="offers.html" class="active">العروض</a></li>
+          <li><a href="cart.html">السلة <span class="cart-count" id="cartCount" hidden>0</span></a></li>
+        </ul>
+      </nav>
+      <a href="https://www.instagram.com/gharsplants/" class="contact-btn" target="_blank" rel="noopener" aria-label="تواصل معنا عبر إنستقرام"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <div class="container">
+        <h1>العروض</h1>
+        <p>خصومات و أكواد حصرية لعملاء غرس، استخدمها وقت الدفع.</p>
+        </div>
+        </section>
+
+        <section class="section container">
+          <h2>أكواد الخصم</h2>
+          <div class="offers-grid">
+
+            <div class="offers-card">
+              <span class="badge">أول طلب</span>
+              <h3>خصم 15%</h3>
+              <p>على اول طلب لك من غرس</p>
+              <button type="button" class="offers-code" data-code="WELCOME15">WELCOME15</button>
+            </div>
+
+            <div class="offers-card">
+              <span class="badge">باقة العناية</span>
+              <h3>خصم 10%</h3>
+              <p>عند شراء باقة العناية مع أي نبتة</p>
+              <button type="button" class="offers-code" data-code="GHARS10">GHARS10</button>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="section container">
+          <h2>منتجات عليها خصم</h2>
+          <div class="sale-grid" id="saleGrid">
+          </div>
+        </section>
+
+        <section class="section container">
+          <div class="kit-banner">
+            <img src="../images/products/care-kit.jpg" alt="باقة نبتة و أصيص و أدوات عناية">
+            <div class="kit-text">
+              <h2>باقة نبتة + أصيص+ عناية</h2>
+              <p>كل اللي تحتاجه في طلب واحد، وبسعر أقل من شرائها متفرقة</p>
+              <a href="care-kit.html" class="btn">شوف الباقة </a>
+            </div>
+          </div>
+        </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <strong>غرس</strong>
+        <p>متجر نباتات إلكتروني، توصيل داخل الرياض.</p>
+      </div>
+      <ul>
+        <li><a href="products.html">المنتجات</a></li>
+        <li><a href="plant-finder.html">اختاري نبتتك</a></li>
+        <li><a class="social" href="https://www.instagram.com/gharsplants/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>تواصل معنا</span></a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/products-data.js?v=10"></script>
+  <script src="../js/cart.js?v=10"></script>
+  <script src="../js/nav.js?v=10"></script>
+  <script src="../js/offers.js?v=10"></script>
+</body>
+</html>
