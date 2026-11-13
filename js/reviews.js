@@ -15,8 +15,10 @@ function starsText(n){
 function renderReviews(id){
     reviewId = id;
     const list = getReviews()[id] || [];
+    const avgEl = document.getElementById("ratingAvg");
     const listEl = document.getElementById("reviewList");
 
+    if (list.length === 0){
         avgEl.textContent = "لا يوجد تعليقات سابقة، كوني أول من يقيم";
         listEl.innerHTML="";
         return;
