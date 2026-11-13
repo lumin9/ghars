@@ -59,11 +59,11 @@ img { max-width: 100%; display: block; }
 
 .hero {
   position: relative; display: flex; min-height: 480px; overflow: hidden;
-  background: #f3e6cf url(../images/hero-leaf.jpg) center / cover no-repeat;
+  background: #efe6d6 url(../images/hero-plants.jpg) left bottom / cover no-repeat;
 }
 .hero::before {
   content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
-  background: linear-gradient(to left, rgba(250, 244, 232, .94) 0%, rgba(250, 244, 232, .6) 42%, rgba(250, 244, 232, 0) 68%);
+  background: linear-gradient(to left, rgba(250, 244, 232, .7) 0%, rgba(250, 244, 232, .35) 40%, rgba(250, 244, 232, 0) 60%);
 }
 .hero .container { position: relative; display: flex; align-items: center; padding-block: 60px 96px; }
 .hero-text { max-width: 28rem; }
@@ -161,40 +161,30 @@ main > section { position: relative; z-index: 1; }
 .light-high strong::before { background: #f0a050; box-shadow: 0 0 0 4px #fbe1c4; }
 .light-card span { color: var(--muted); font-size: .95rem; }
 
-.ad-spot {
-  position: relative; display: grid; grid-template-columns: 1fr 1.35fr; gap: 30px; align-items: center;
-  background: radial-gradient(circle at 15% 20%, #2e6b3a 0%, var(--green-dark) 60%);
-  border-radius: 22px; padding: 36px 40px 44px; color: #fff; overflow: hidden;
+.jeeran-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+.jeeran-card {
+  display: flex; flex-direction: column; background: #fff; border: 1px solid #ece6d8;
+  border-radius: 16px; overflow: hidden; box-shadow: 0 6px 18px rgba(31, 74, 40, .06);
+  transition: transform .2s, box-shadow .2s;
 }
-.ad-text h2 { color: #fff; font-size: 1.9rem; margin: 10px 0 6px; }
-.ad-text p { color: #d9e6da; margin-bottom: 20px; }
-.ad-label {
-  position: relative; display: inline-block; background: var(--offwhite); color: var(--green-dark);
-  font-weight: 800; font-size: .85rem; padding: 2px 14px 2px 26px; border-radius: 4px 14px 14px 4px;
+.jeeran-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(31, 74, 40, .12); }
+.jeeran-img { position: relative; display: block; overflow: hidden; }
+.jeeran-img img { width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; transition: transform .4s; }
+.jeeran-card:hover .jeeran-img img { transform: scale(1.03); }
+.jeeran-tag {
+  position: absolute; top: 14px; left: 14px; background: rgba(60, 60, 60, .65); color: #fff;
+  font-size: .82rem; font-weight: 700; padding: 0 10px; border-radius: 6px; line-height: 1.9;
 }
-.ad-label::after { content: ""; position: absolute; left: 9px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--green-dark); }
-.ad-btn { display: inline-flex; gap: 8px; align-items: center; }
-
-@supports not (aspect-ratio: 1) { .ad-board { height: 260px; } }
-.ad-frame { position: relative; display: block; padding-top: 64px; transform-origin: 50% 0; }
-.ropes { position: absolute; top: 6px; left: 0; width: 100%; height: 66px; overflow: visible; }
-.ropes path { fill: none; stroke: #d8c39c; stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-dasharray: 5 3; }
-.hook { position: absolute; top: 0; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; border: 3px solid #d8c39c; background: var(--green-dark); }
-.ad-board {
-  position: relative; z-index: 1; display: block; aspect-ratio: 16 / 9; overflow: hidden;
-  background: var(--offwhite); border: 10px solid #efe0c2; border-radius: 14px;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, .3), inset 0 0 0 1px rgba(0, 0, 0, .05);
-  transform: rotate(-1.5deg); transition: transform .4s;
+.jeeran-body { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 22px 28px 24px; }
+.jeeran-body h3 { color: var(--green-dark); font-size: 1.35rem; line-height: 1.4; }
+.jeeran-body p { color: var(--muted); font-size: .95rem; margin-bottom: 14px; }
+.jeeran-btn {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: auto;
+  border: 1.5px solid var(--green); color: var(--green); border-radius: 10px;
+  padding: 7px 22px; font-weight: 800;
 }
-.ad-board img { width: 100%; height: 100%; object-fit: cover; }
-.ad-placeholder {
-  display: flex; height: 100%; align-items: center; justify-content: center; color: var(--muted); font-weight: 700;
-  border: 2px dashed var(--green-light); border-radius: 6px; margin: 0; background: repeating-linear-gradient(45deg, #faf7f0 0 12px, #f3eee2 12px 24px);
-}
-.ad-leaf { position: absolute; z-index: 2; width: 130px; left: -38px; bottom: -34px; transform: rotate(18deg); pointer-events: none; }
-.ad-frame:hover .ad-board, .ad-frame:focus-visible .ad-board { transform: rotate(0deg); }
-.ad-frame:hover { animation: swing 1.2s ease-in-out; }
-@keyframes swing { 25% { transform: rotate(1.2deg); } 60% { transform: rotate(-.8deg); } 100% { transform: rotate(0); } }
+.jeeran-btn span { font-size: 1.1rem; }
+.jeeran-btn:hover { background: var(--green); color: #fff; }
 
 .kit-banner {
   display: grid; grid-template-columns: 300px 1fr; align-items: center; gap: 0;
@@ -506,8 +496,8 @@ main > section { position: relative; z-index: 1; }
   .care-steps { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 1330px) {
-  .hang { opacity: .3; }
+@media (max-width: 1500px) {
+  .hang { display: none; }
 }
 @media (max-width: 700px) {
   .navbar .container { padding-block: 8px; }
@@ -535,7 +525,7 @@ main > section { position: relative; z-index: 1; }
   .categories { grid-template-columns: repeat(3, 1fr); }
   .home-grid { grid-template-columns: repeat(2, 1fr); }
   .light-cards { grid-template-columns: 1fr; max-width: 520px; }
-  .ad-spot { grid-template-columns: minmax(0, 1fr); padding: 30px 24px 40px; }
+  .jeeran-grid { grid-template-columns: 1fr; gap: 20px; }
   .kit-banner { grid-template-columns: 1fr; }
   .kit-banner > img { aspect-ratio: 16 / 9; height: auto; }
 }
@@ -555,7 +545,7 @@ main > section { position: relative; z-index: 1; }
   .category { font-size: .95rem; }
   .category span { padding: 6px 10px; }
   .kit-text { padding: 24px 20px; }
-  .ad-leaf { width: 90px; }
+  .jeeran-body { padding: 18px 20px 20px; }
 }
 
 .offers-grid{
