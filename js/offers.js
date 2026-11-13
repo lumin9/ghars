@@ -18,11 +18,17 @@ const SALE = [
     { id:"fiddle-leaf-fig", off: 15},
     { id:"snake-plant", off: 10},
     { id:"peace-lily", off: 10},
+    { id:"pothos", off: 15},
+    { id:"rubber-plant", off: 15},
+    { id:"lemon-tree", off: 20},
+    { id:"ceramic-pot", off: 10},
 ];
 
 const saleGrid = document.getElementById("saleGrid");
 
-SALE.forEach(s => {
+const list = location.pathname.includes("/pages/")? SALE: SALE.slice(0,4);
+
+list.forEach(s => {
     const p = PRODUCTS.find(x => x.id === s.id);
     const newPrice = Math.round(p.price * (100-s.off)/100);
 
