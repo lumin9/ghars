@@ -606,3 +606,64 @@ button.offers-code:hover {background: #fbf3e4;}
   margin-inline-start: 6px;
 }
 .sale-grid .card-foot{ flex-direction: column; align-items: stretch;}
+
+/* التقييمات*/
+.reviews {
+  border-top: 1px solid var(--green-pale);
+  margin-top: 20px;
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stars{
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+.rating-avg{
+  color: var(--muted);
+}
+.review-list{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review-list li{
+  background: var(--offwhite);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.revew-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.review-form{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.review-form input, .review-form textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border: 1px solid var(--green-pale);
+  border-radius: 10px;
+  width: 100%;
+}
+.star-pick {
+  display: flex;
+  gap: 4px;
+}
+.star-pick button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #d8d2c4;
+  cursor: pointer;
+  line-height: 1;
+}
+.star-pick button.on {
+  color: var(--accent);
+}
