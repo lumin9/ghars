@@ -182,8 +182,9 @@
     </div>
   </footer>
 
-  <script src="../js/cart.js?v=4"></script>
-  <script src="../js/nav.js?v=4"></script>
+  <script src="../js/products-data.js?v=10"></script>
+  <script src="../js/cart.js?v=10"></script>
+  <script src="../js/nav.js?v=10"></script>
   <script>
     var cartItems = getCart();
     if (!cartItems.length) { window.location.href = "cart.html"; }
@@ -208,7 +209,41 @@
     var DELIVERY = COURIERS.aramex.fee;
     var discount = 0;
 
-    var COUPONS = { "GHARS10": 10 };
+    var USED_KEY = "ghars-used-coupons";
+    var appliedCode = "";
+
+    function usedCoupons() {
+      try { return JSON.parse(localStorage.getItem(USED_KEY)) || []; } catch (e) { return []; }
+    }
+
+    function catOf(id) {
+      var p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
+      return p ? p.cat : "";
+    }
+
+    function hasCareKitWithPlant() {
+      var kit = cartItems.some(function (i) { return i.id === "care-kit"; });
+      var plant = cartItems.some(function (i) {
+        var c = catOf(i.id);
+        return c === "indoor" || c === "outdoor";
+      });
+      return kit && plant;
+    }
+
+    var COUPONS = {
+      "WELCOME15": {
+        percent: 15,
+        check: function () {
+          return usedCoupons().indexOf("WELCOME15") === -1 ? "" : "هذا الكود لأول طلب فقط، وقد استخدمتيه من قبل.";
+        }
+      },
+      "GHARS10": {
+        percent: 10,
+        check: function () {
+          return hasCareKitWithPlant() ? "" : "هذا الكود يُطبق عند شراء باقة العناية مع أي نبتة.";
+        }
+      }
+    };
 
     var form = document.getElementById("checkout-form");
     var cardFields = document.getElementById("card-fields");
@@ -234,14 +269,26 @@
     document.getElementById("apply-coupon").addEventListener("click", function () {
       var code = document.getElementById("coupon").value.trim().toUpperCase();
       var msg = document.getElementById("coupon-msg");
-      if (COUPONS[code]) {
-        discount = Math.round(SUBTOTAL * COUPONS[code] / 100);
-        msg.textContent = "تم تطبيق الكود: خصم " + COUPONS[code] + "%";
-        msg.className = "note ok";
-      } else {
-        discount = 0;
+      var coupon = COUPONS[code];
+      appliedCode = "";
+      discount = 0;
+      if (!code) {
+        msg.textContent = "اكتبي كود الخصم أولاً.";
+        msg.className = "note bad";
+      } else if (!coupon) {
         msg.textContent = "الكود غير صحيح";
         msg.className = "note bad";
+      } else {
+        var problem = coupon.check();
+        if (problem) {
+          msg.textContent = problem;
+          msg.className = "note bad";
+        } else {
+          appliedCode = code;
+          discount = Math.round(SUBTOTAL * coupon.percent / 100);
+          msg.textContent = "تم تطبيق الكود " + code + ": خصم " + coupon.percent + "%";
+          msg.className = "note ok";
+        }
       }
       updateTotals();
     });
@@ -295,6 +342,11 @@
         if (document.getElementById("card-cvv").value.length !== 3) return showError("رمز CVV لازم يكون 3 أرقام.");
       }
 
+      if (appliedCode) {
+        var used = usedCoupons();
+        if (used.indexOf(appliedCode) === -1) used.push(appliedCode);
+        try { localStorage.setItem(USED_KEY, JSON.stringify(used)); } catch (err) {}
+      }
       saveCart([]);
       var orderId = "GH" + Math.floor(100000 + Math.random() * 900000);
       window.location.href = "order-tracking.html?order=" + orderId + "&courier=" + form.elements["courier"].value;
