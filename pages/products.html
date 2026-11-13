@@ -153,6 +153,27 @@
           <button type="button" class="btn" id="pdAdd">أضيفي للسلة</button>
         </div>
         <a class="pd-link" id="pdLink" href="care-kit.html" hidden>تفاصيل الباقة &larr;</a>
+
+        <section class="reviews">
+          <h3>التقييمات</h3>
+          <p class="rating-avg" id="ratingAvg"></p>
+          <ul class="review-list" id="reviewList"></ul>
+          
+          <form class="review-form" id="reviewForm">
+            <h4>أضيفي تقييمك</h4>
+            <div class="star-pick" id="starPick">
+              <button type="button" data-star="1" aria-label="نجمة">★</button>
+              <button type="button" data-star="2" aria-label="نجمة">★</button>
+              <button type="button" data-star="3" aria-label="نجمة">★</button>
+              <button type="button" data-star="4" aria-label="نجمة">★</button>
+              <button type="button" data-star="5" aria-label="نجمة">★</button>
+            </div>
+            <input type="text" id="reviewName" placeholder="اسمك" required>
+            <textarea id="reviewText" rows="3" placeholder="وش رأيك بالمنتج؟" required></textarea>
+            <button type="submit" class="btn">إرسال التقييم</button>
+          </form>
+        </section>
+
       </div>
     </div>
   </dialog>
@@ -175,6 +196,7 @@
 
   <script src="../js/products-data.js?v=10"></script>
   <script src="../js/cart.js?v=10"></script>
+  <script src="../js/reviews.js?v=10"></script>
   <script src="../js/products.js?v=10"></script>
   <script src="../js/nav.js?v=10"></script>
 </body>

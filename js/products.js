@@ -156,6 +156,7 @@ function openProduct(id) {
   updatePreview();
   qtyInput.value = 1;
 
+  renderReviews(id);
   dialog.showModal();
   const p2 = new URLSearchParams(location.search); p2.set("id", id);
   history.replaceState(null, "", "?" + p2.toString());
